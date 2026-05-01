@@ -1,0 +1,28 @@
+{
+  "stage": "cv_search",
+  "current_params": {
+    "colsample_bytree": 0.8,
+    "learning_rate": 0.03,
+    "max_depth": 12,
+    "min_child_samples": 40,
+    "n_estimators": 500,
+    "num_leaves": 31,
+    "subsample": 1.0
+  },
+  "current_combo_index": 46,
+  "current_fold": 7,
+  "total_param_combinations": 192,
+  "total_folds": 1920,
+  "completed_folds": 457,
+  "progress_ratio": 0.23802083333333332,
+  "best_cv_score_so_far": 0.7234304997720449,
+  "best_params_so_far": {
+    "colsample_bytree": 0.8,
+    "learning_rate": 0.03,
+    "max_depth": -1,
+    "min_child_samples": 40,
+    "n_estimators": 300,
+    "num_leaves": 31,
+    "subsample": 0.8
+  }
+}

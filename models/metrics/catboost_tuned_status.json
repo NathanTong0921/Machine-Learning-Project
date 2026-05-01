@@ -1,0 +1,16 @@
+{
+  "stage": "completed",
+  "best_params": {
+    "depth": 6,
+    "iterations": 500,
+    "l2_leaf_reg": 9,
+    "learning_rate": 0.05,
+    "random_strength": 1.0
+  },
+  "best_cv_score_f1_macro": 0.7220408738363392,
+  "paths": {
+    "metrics": "/media/990Pro/ML/models/metrics/catboost_tuned_metrics.csv",
+    "best_params": "/media/990Pro/ML/models/metrics/catboost_tuned_best_params.json",
+    "cv_results": "/media/990Pro/ML/models/metrics/catboost_tuned_cv_results.csv"
+  }
+}

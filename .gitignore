@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.ipynb_checkpoints/
+.DS_Store
+
+logs/
+catboost_info/
+models/saved_models/
+reports/figures/
+submission/*.zip
+data/interim/
+data/processed/

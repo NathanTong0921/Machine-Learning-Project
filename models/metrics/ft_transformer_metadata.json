@@ -1,0 +1,188 @@
+{
+  "device": "cuda",
+  "seed": 62,
+  "best_epoch": 10,
+  "best_val_loss": 0.6844942904287769,
+  "cat_feature_names": [
+    "Marital status",
+    "Application mode",
+    "Application order",
+    "Course",
+    "Daytime/evening attendance",
+    "Previous qualification",
+    "Nacionality",
+    "Mother's qualification",
+    "Father's qualification",
+    "Mother's occupation",
+    "Father's occupation",
+    "Displaced",
+    "Educational special needs",
+    "Debtor",
+    "Tuition fees up to date",
+    "Gender",
+    "Scholarship holder",
+    "International"
+  ],
+  "num_feature_names": [
+    "Previous qualification (grade)",
+    "Admission grade",
+    "Age at enrollment",
+    "Curricular units 1st sem (credited)",
+    "Curricular units 1st sem (enrolled)",
+    "Curricular units 1st sem (evaluations)",
+    "Curricular units 1st sem (approved)",
+    "Curricular units 1st sem (grade)",
+    "Curricular units 1st sem (without evaluations)",
+    "Curricular units 2nd sem (credited)",
+    "Curricular units 2nd sem (enrolled)",
+    "Curricular units 2nd sem (evaluations)",
+    "Curricular units 2nd sem (approved)",
+    "Curricular units 2nd sem (grade)",
+    "Curricular units 2nd sem (without evaluations)",
+    "Unemployment rate",
+    "Inflation rate",
+    "GDP"
+  ],
+  "cat_cardinalities": [
+    7,
+    18,
+    9,
+    18,
+    3,
+    18,
+    16,
+    27,
+    28,
+    32,
+    38,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3
+  ],
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.001571686760867,
+      "val_loss": 0.8404359794432117
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.8388155541820557,
+      "val_loss": 0.7839363040462617
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.7832791370028248,
+      "val_loss": 0.7416902519041492
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.753343485861487,
+      "val_loss": 0.7259785267614549
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.716854553615527,
+      "val_loss": 0.7068892402033652
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.6959447171268247,
+      "val_loss": 0.6946595499592443
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.6873257656089709,
+      "val_loss": 0.7168488867821232
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.6882190751528702,
+      "val_loss": 0.6960437793885508
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.6717739914076009,
+      "val_loss": 0.6886255333500524
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.6599381961807103,
+      "val_loss": 0.6844942904287769
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.6678123771662858,
+      "val_loss": 0.7093064723476287
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.660361332924185,
+      "val_loss": 0.7007310594281843
+    },
+    {
+      "epoch": 13,
+      "train_loss": 0.6454351288243911,
+      "val_loss": 0.6875472737896827
+    },
+    {
+      "epoch": 14,
+      "train_loss": 0.6437048719464673,
+      "val_loss": 0.7057194009903939
+    },
+    {
+      "epoch": 15,
+      "train_loss": 0.6456418582426326,
+      "val_loss": 0.7144428214719218
+    },
+    {
+      "epoch": 16,
+      "train_loss": 0.631775198537429,
+      "val_loss": 0.69466259056522
+    },
+    {
+      "epoch": 17,
+      "train_loss": 0.6207511634453048,
+      "val_loss": 0.7235805238446882
+    },
+    {
+      "epoch": 18,
+      "train_loss": 0.6044154699187672,
+      "val_loss": 0.7386255648828322
+    },
+    {
+      "epoch": 19,
+      "train_loss": 0.6225441682704623,
+      "val_loss": 0.6846435569947765
+    },
+    {
+      "epoch": 20,
+      "train_loss": 0.5996006060879142,
+      "val_loss": 0.7447815714343902
+    },
+    {
+      "epoch": 21,
+      "train_loss": 0.6158213517199811,
+      "val_loss": 0.6892517678199276
+    },
+    {
+      "epoch": 22,
+      "train_loss": 0.6034692306318268,
+      "val_loss": 0.7176819832094254
+    }
+  ],
+  "config": {
+    "d_token": 48,
+    "n_blocks": 2,
+    "attention_n_heads": 4,
+    "attention_dropout": 0.2,
+    "ff_dropout": 0.2,
+    "lr": 0.0008,
+    "weight_decay": 0.0001,
+    "batch_size": 128
+  }
+}
