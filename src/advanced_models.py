@@ -1161,6 +1161,7 @@ def train_multiview_gated_mlp(
     batch_size=128,
     max_epochs=80,
     patience=12,
+    class_weight_multipliers=None,
 ):
     set_seed(seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -1177,6 +1178,9 @@ def train_multiview_gated_mlp(
 
     class_counts = np.bincount(data_bundle.train_labels_idx, minlength=len(LABELS))
     class_weights = len(data_bundle.train_labels_idx) / (len(LABELS) * np.maximum(class_counts, 1))
+    if class_weight_multipliers:
+        multipliers = np.array([class_weight_multipliers.get(label, 1.0) for label in LABELS], dtype=np.float32)
+        class_weights = class_weights * multipliers
     criterion = nn.CrossEntropyLoss(weight=torch.tensor(class_weights, dtype=torch.float32, device=device))
     optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
 
@@ -1227,6 +1231,8 @@ def train_multiview_gated_mlp(
         "seed": seed,
         "best_epoch": best_epoch,
         "best_val_loss": best_val_loss,
+        "class_weights": {label: float(weight) for label, weight in zip(LABELS, class_weights)},
+        "class_weight_multipliers": class_weight_multipliers or {},
         "view_dims": data_bundle.view_dims,
         "history": history,
     }
