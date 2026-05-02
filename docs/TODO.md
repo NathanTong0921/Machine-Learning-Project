@@ -106,6 +106,24 @@ Rules:
 - Tune weights only on CV/OOF predictions.
 - Do not tune on the final test set.
 
+Current scaffold result without LightGBM:
+
+- Members: `catboost_tuned`, `multiview_gated_mlp_best`, `tabpfn`
+- Best OOF weights:
+  - `catboost_tuned = 0.50`
+  - `multiview_gated_mlp_best = 0.05`
+  - `tabpfn = 0.45`
+- OOF macro-F1: `0.73134`
+- Test macro-F1: `0.73203`
+- Test accuracy: `0.78690`
+- Test AUC: `0.90406`
+- Test Enrolled recall/F1: `0.53782 / 0.53782`
+
+Conclusion:
+
+- This is currently the strongest result by macro-F1.
+- Add `lightgbm_tuned` to this ensemble after the LightGBM grid search finishes.
+
 ### P1. Decision Rule / Threshold Optimization
 
 Because TabPFN has high AUC but lower macro-F1, try class-specific probability biases or thresholds:
