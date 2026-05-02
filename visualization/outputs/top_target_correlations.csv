@@ -1,0 +1,16 @@
+Feature,Correlation with Target
+Curricular units 2nd sem (approved),0.6241574639770564
+Curricular units 2nd sem (grade),0.5668272799035224
+Curricular units 1st sem (approved),0.5291232554190112
+Curricular units 1st sem (grade),0.4852073909050093
+Tuition fees up to date,0.40982675467868734
+Scholarship holder,0.2975952913982134
+Age at enrollment,-0.24343751143960052
+Debtor,-0.24099890282310757
+Gender,-0.22926957430635383
+Application mode,-0.22174658100365024
+Curricular units 2nd sem (enrolled),0.1758468240064863
+Curricular units 1st sem (enrolled),0.1559739685009514
+Admission grade,0.12088915680200855
+Displaced,0.11398557002006576
+Previous qualification (grade),0.10376369716387839
