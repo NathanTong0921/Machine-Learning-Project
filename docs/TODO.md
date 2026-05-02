@@ -114,6 +114,20 @@ Because TabPFN has high AUC but lower macro-F1, try class-specific probability b
 - Track whether `Enrolled` recall improves without excessive macro-F1 loss.
 - Do not optimize directly on the test set.
 
+CatBoost tuned decision-bias experiment was run with 5-fold OOF probabilities:
+
+- Best OOF log-probability bias: `Dropout=0.0`, `Enrolled=0.05`, `Graduate=0.25`
+- OOF macro-F1 improved from `0.71257` to `0.71760`
+- Test macro-F1 changed from `0.72222` to `0.72165`
+- Test accuracy improved from `0.75904` to `0.76581`
+- Test AUC improved from `0.89594` to `0.89730`
+- Test Enrolled recall dropped from `0.65546` to `0.60504`
+
+Conclusion:
+
+- Bias optimization helps overall accuracy/AUC and OOF macro-F1, but it does not improve final test macro-F1 or Enrolled recall for CatBoost.
+- Keep raw CatBoost tuned as the main CatBoost result unless the report emphasizes accuracy/AUC instead of macro-F1.
+
 ### P2. Neural Categorical Embeddings
 
 Try a categorical-embedding version of MultiViewGatedMLP:
