@@ -45,6 +45,24 @@ PARAM_GRID = {
 }
 
 LIGHTGBM_N_JOBS = int(os.environ.get("LIGHTGBM_N_JOBS", "108"))
+PARAM_COLUMNS = [
+    "colsample_bytree",
+    "learning_rate",
+    "max_depth",
+    "min_child_samples",
+    "n_estimators",
+    "num_leaves",
+    "subsample",
+]
+PARAM_CASTERS = {
+    "colsample_bytree": float,
+    "learning_rate": float,
+    "max_depth": int,
+    "min_child_samples": int,
+    "n_estimators": int,
+    "num_leaves": int,
+    "subsample": float,
+}
 
 
 def save_status(path, payload):
@@ -53,6 +71,22 @@ def save_status(path, payload):
 
 def progress_print(message):
     print(f"[PROGRESS] {message}", flush=True)
+
+
+def load_existing_cv_results(path):
+    if not path.exists() or path.stat().st_size == 0:
+        return [], None, -np.inf
+
+    results_df = pd.read_csv(path)
+    if results_df.empty:
+        return [], None, -np.inf
+
+    records = results_df.to_dict("records")
+    best_idx = results_df["cv_mean_f1_macro"].astype(float).idxmax()
+    best_row = results_df.loc[best_idx]
+    best_params = {col: PARAM_CASTERS[col](best_row[col]) for col in PARAM_COLUMNS}
+    best_score = float(best_row["cv_mean_f1_macro"])
+    return records, best_params, best_score
 
 
 def main():
@@ -80,10 +114,10 @@ def main():
     status_path = METRICS_DIR / "lightgbm_tuned_status.json"
     cv_results_path = METRICS_DIR / "lightgbm_tuned_cv_results.csv"
 
-    cv_records = []
-    best_params = None
-    best_cv_score = -np.inf
-    completed_folds = 0
+    cv_records, best_params, best_cv_score = load_existing_cv_results(cv_results_path)
+    completed_combos = min(len(cv_records), len(param_list))
+    completed_folds = completed_combos * cv.get_n_splits()
+    remaining_params = param_list[completed_combos:]
 
     save_status(
         status_path,
@@ -92,16 +126,26 @@ def main():
             "total_param_combinations": len(param_list),
             "total_folds": total_folds,
             "completed_folds": completed_folds,
+            "completed_param_combinations": completed_combos,
+            "resume_from_combo_index": completed_combos + 1 if remaining_params else None,
+            "best_cv_score_so_far": best_cv_score,
+            "best_params_so_far": best_params,
             "lightgbm_n_jobs": LIGHTGBM_N_JOBS,
         },
     )
     progress_print(
         f"start param_combinations={len(param_list)} total_folds={total_folds} "
-        f"lightgbm_n_jobs={LIGHTGBM_N_JOBS}"
+        f"completed_combos={completed_combos} lightgbm_n_jobs={LIGHTGBM_N_JOBS}"
     )
 
-    outer_iter = tqdm(param_list, desc="LightGBM param grid", unit="combo") if tqdm is not None else param_list
-    for combo_idx, params in enumerate(outer_iter, start=1):
+    outer_iter = tqdm(
+        remaining_params,
+        desc="LightGBM param grid",
+        unit="combo",
+        initial=completed_combos,
+        total=len(param_list),
+    ) if tqdm is not None else remaining_params
+    for combo_idx, params in enumerate(outer_iter, start=completed_combos + 1):
         fold_scores = []
         for fold_idx, (train_idx, valid_idx) in enumerate(cv.split(X_train, y_train), start=1):
             X_tr = X_train.iloc[train_idx].copy()
