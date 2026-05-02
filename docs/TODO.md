@@ -20,6 +20,21 @@
   - `Age at enrollment`
   - `Debtor`
 - Because target was encoded as `0=Dropout`, `1=Enrolled`, `2=Graduate`, correlations are exploratory only and should not be described as causal evidence.
+- Class-wise semester means show a strong monotonic academic-performance gap:
+  - Dropout: `2nd sem approved = 1.94`, `2nd sem grade = 5.90`
+  - Enrolled: `2nd sem approved = 4.06`, `2nd sem grade = 11.12`
+  - Graduate: `2nd sem approved = 6.18`, `2nd sem grade = 12.70`
+- PCA is weak as direct class-separation evidence:
+  - `PC1 explained variance = 0.2340`
+  - `PC2 explained variance = 0.0974`
+  - `PC1 + PC2 = 0.3314`
+  - `PCA silhouette by target = 0.0032`
+- This supports using t-SNE only as local-neighborhood visualization, not as standalone classification evidence.
+- TargetEncoder + semester ratio features was tested:
+  - 5-fold best macro-F1 mean: `targetenc_semester_logistic = 0.71311`, `targetenc_semester_histgb = 0.71186`
+  - final test best macro-F1: `targetenc_semester_histgb = 0.71970`
+  - `targetenc_semester_logistic` gives high `Enrolled recall = 0.65966` on test but lower global macro-F1 `0.70439`
+  - Conclusion: useful supporting baseline and good Enrolled-recall evidence, but not better than current CatBoost/MultiView leaders.
 
 ## Encoding Findings
 
@@ -44,7 +59,7 @@ python scripts/summarize_primary_contenders.py
 
 ### P0. TargetEncoder + Semester Ratio Features
 
-Implement a lightweight feature-encoding experiment:
+Implemented a lightweight feature-encoding experiment:
 
 - Add semester ratio features:
   - `1st_approved_rate = approved / enrolled`
@@ -69,6 +84,11 @@ Expected value:
 
 - This tests whether better categorical encoding plus domain-shaped semester features can match or exceed the current `0.722` macro-F1 region.
 - It is cheaper than adding more Transformer variants.
+
+Current result:
+
+- It did not exceed the best models.
+- It remains useful in the report because it validates that semester-ratio features and target encoding are competitive, interpretable baselines.
 
 ### P1. OOF Probability Ensemble
 
