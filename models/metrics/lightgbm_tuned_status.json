@@ -2,19 +2,19 @@
   "stage": "cv_search",
   "current_params": {
     "colsample_bytree": 0.8,
-    "learning_rate": 0.03,
-    "max_depth": 12,
-    "min_child_samples": 40,
+    "learning_rate": 0.05,
+    "max_depth": -1,
+    "min_child_samples": 20,
     "n_estimators": 500,
-    "num_leaves": 31,
-    "subsample": 1.0
+    "num_leaves": 63,
+    "subsample": 0.8
   },
-  "current_combo_index": 46,
-  "current_fold": 7,
+  "current_combo_index": 55,
+  "current_fold": 10,
   "total_param_combinations": 192,
   "total_folds": 1920,
-  "completed_folds": 457,
-  "progress_ratio": 0.23802083333333332,
+  "completed_folds": 550,
+  "progress_ratio": 0.2864583333333333,
   "best_cv_score_so_far": 0.7234304997720449,
   "best_params_so_far": {
     "colsample_bytree": 0.8,
@@ -24,5 +24,6 @@
     "n_estimators": 300,
     "num_leaves": 31,
     "subsample": 0.8
-  }
+  },
+  "lightgbm_n_jobs": 120
 }
