@@ -1,29 +1,19 @@
 {
-  "stage": "cv_search",
-  "current_params": {
-    "colsample_bytree": 0.8,
-    "learning_rate": 0.05,
-    "max_depth": -1,
-    "min_child_samples": 20,
-    "n_estimators": 500,
-    "num_leaves": 63,
-    "subsample": 0.8
-  },
-  "current_combo_index": 55,
-  "current_fold": 10,
-  "total_param_combinations": 192,
-  "total_folds": 1920,
-  "completed_folds": 550,
-  "progress_ratio": 0.2864583333333333,
-  "best_cv_score_so_far": 0.7234304997720449,
-  "best_params_so_far": {
-    "colsample_bytree": 0.8,
+  "stage": "completed",
+  "best_params": {
+    "colsample_bytree": 1.0,
     "learning_rate": 0.03,
     "max_depth": -1,
     "min_child_samples": 40,
     "n_estimators": 300,
-    "num_leaves": 31,
+    "num_leaves": 63,
     "subsample": 0.8
   },
-  "lightgbm_n_jobs": 120
+  "best_cv_score_f1_macro": 0.7276403619333507,
+  "lightgbm_n_jobs": 120,
+  "paths": {
+    "metrics": "/hpc2hdd/home/shuang886/ML/models/metrics/lightgbm_tuned_metrics.csv",
+    "best_params": "/hpc2hdd/home/shuang886/ML/models/metrics/lightgbm_tuned_best_params.json",
+    "cv_results": "/hpc2hdd/home/shuang886/ML/models/metrics/lightgbm_tuned_cv_results.csv"
+  }
 }
