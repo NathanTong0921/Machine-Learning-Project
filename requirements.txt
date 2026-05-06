@@ -6,3 +6,5 @@ seaborn
 jupyter
 scipy
 torch
+lightgbm
+catboost

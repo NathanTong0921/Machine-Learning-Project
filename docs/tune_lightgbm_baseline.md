@@ -44,6 +44,22 @@
 python scripts/tune_lightgbm_baseline.py
 ```
 
+如果要显式使用 108 个 CPU 线程：
+
+```bash
+LIGHTGBM_N_JOBS=108 python scripts/tune_lightgbm_baseline.py
+```
+
+## 断点续跑
+
+脚本会读取已有的：
+
+```text
+models/metrics/lightgbm_tuned_cv_results.csv
+```
+
+然后跳过已经完整写入 CSV 的参数组合，从下一个组合继续搜索。状态文件中如果停在某个组合的中间 fold，该组合会从头重跑一次，避免把不完整 fold 结果写进均值。
+
 ## 解释建议
 
 - 如果 tuned LightGBM 接近或超过 tuned CatBoost，就说明这份数据未必强依赖 CatBoost 的 ordered boosting 机制。
