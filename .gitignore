@@ -12,3 +12,9 @@ reports/figures/
 submission/*.zip
 data/interim/
 data/processed/
+
+submission/data/interim
+submission/reports
+models/metrics
+submission/reports
+submission/Merged_Project-temp.ipynb
