@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/compare_structured_tabular_transformers.py](/media/990Pro/ML/scripts/compare_structured_tabular_transformers.py)
+对应脚本：[scripts/transformer/compare_structured_tabular_transformers.py](/media/990Pro/ML/scripts/transformer/compare_structured_tabular_transformers.py)
 
 这个脚本负责比较三条路线：
 
@@ -49,7 +49,7 @@
 ## 运行方式
 
 ```bash
-python scripts/compare_structured_tabular_transformers.py
+python scripts/transformer/compare_structured_tabular_transformers.py
 ```
 
 ## 解释建议

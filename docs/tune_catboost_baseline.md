@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/tune_catboost_baseline.py](/media/990Pro/ML/scripts/tune_catboost_baseline.py)
+对应脚本：[scripts/boost/tune_catboost_baseline.py](/media/990Pro/ML/scripts/boost/tune_catboost_baseline.py)
 
 这个脚本负责给 `CatBoost` 做一轮 `10-fold` 超参数搜索。
 
@@ -36,7 +36,7 @@
 ## 运行方式
 
 ```bash
-python scripts/tune_catboost_baseline.py
+python scripts/boost/tune_catboost_baseline.py
 ```
 
 ## 解释建议

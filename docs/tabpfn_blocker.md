@@ -3,7 +3,7 @@
 ## 当前状态
 
 - `tabpfn` 包已经成功安装
-- 运行 [run_tabpfn_baseline.py](/media/990Pro/ML/scripts/run_tabpfn_baseline.py) 时，阻塞在官方模型权重下载前的一次性 license 验证
+- 运行 [run_tabpfn_baseline.py](/media/990Pro/ML/scripts/transformer/run_tabpfn_baseline.py) 时，阻塞在官方模型权重下载前的一次性 license 验证
 
 ## 具体报错
 
@@ -36,7 +36,7 @@ export TABPFN_TOKEN="<your-api-key>"
 然后重新运行：
 
 ```bash
-python scripts/run_tabpfn_baseline.py
+python scripts/transformer/run_tabpfn_baseline.py
 ```
 
 ## 当前判断
@@ -49,6 +49,6 @@ python scripts/run_tabpfn_baseline.py
 
 - `tabpfn` 已安装
 - baseline 脚本已写好：
-  - [run_tabpfn_baseline.py](/media/990Pro/ML/scripts/run_tabpfn_baseline.py)
+  - [run_tabpfn_baseline.py](/media/990Pro/ML/scripts/transformer/run_tabpfn_baseline.py)
 - 说明文档已写好：
   - [run_tabpfn_baseline.md](/media/990Pro/ML/docs/run_tabpfn_baseline.md)

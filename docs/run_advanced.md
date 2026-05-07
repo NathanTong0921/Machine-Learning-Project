@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/run_advanced.py](/media/990Pro/ML/scripts/run_advanced.py)
+对应脚本：[scripts/mlp/run_advanced.py](/media/990Pro/ML/scripts/mlp/run_advanced.py)
 
 这个脚本预留给非标准表格模型，例如：
 
@@ -76,7 +76,7 @@
 ## 运行方式
 
 ```bash
-python scripts/run_advanced.py
+python scripts/mlp/run_advanced.py
 ```
 
 ## 记录建议

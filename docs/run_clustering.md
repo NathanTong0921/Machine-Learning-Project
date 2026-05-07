@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/run_clustering.py](/media/990Pro/ML/scripts/run_clustering.py)
+对应脚本：[scripts/clustering/run_clustering.py](/media/990Pro/ML/scripts/clustering/run_clustering.py)
 
 这个脚本负责完成课程项目中的聚类部分，使用预处理后的训练集做无监督聚类，并输出聚类评价指标。
 
@@ -32,7 +32,7 @@
 ## 运行方式
 
 ```bash
-python scripts/run_clustering.py
+python scripts/clustering/run_clustering.py
 ```
 
 ## 记录建议

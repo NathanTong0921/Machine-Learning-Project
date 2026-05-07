@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/compare_trompt_style_models.py](/media/990Pro/ML/scripts/compare_trompt_style_models.py)
+对应脚本：[scripts/transformer/compare_trompt_style_models.py](/media/990Pro/ML/scripts/transformer/compare_trompt_style_models.py)
 
 这个脚本负责比较：
 
@@ -41,7 +41,7 @@
 ## 运行方式
 
 ```bash
-python scripts/compare_trompt_style_models.py
+python scripts/transformer/compare_trompt_style_models.py
 ```
 
 ## 解释建议

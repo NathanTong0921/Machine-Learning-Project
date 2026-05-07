@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/compare_attention_pooled_viewwise_transformers.py](/media/990Pro/ML/scripts/compare_attention_pooled_viewwise_transformers.py)
+对应脚本：[scripts/transformer/compare_attention_pooled_viewwise_transformers.py](/media/990Pro/ML/scripts/transformer/compare_attention_pooled_viewwise_transformers.py)
 
 这个脚本负责测试一个更强的 view pooling 选择：
 
@@ -35,7 +35,7 @@
 ## 运行方式
 
 ```bash
-python scripts/compare_attention_pooled_viewwise_transformers.py
+python scripts/transformer/compare_attention_pooled_viewwise_transformers.py
 ```
 
 ## 解释建议

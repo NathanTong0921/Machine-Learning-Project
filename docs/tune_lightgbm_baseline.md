@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/tune_lightgbm_baseline.py](/media/990Pro/ML/scripts/tune_lightgbm_baseline.py)
+对应脚本：[scripts/boost/tune_lightgbm_baseline.py](/media/990Pro/ML/scripts/boost/tune_lightgbm_baseline.py)
 
 这个脚本负责给 `LightGBM` 做一轮 `10-fold` 超参数搜索。
 
@@ -41,13 +41,13 @@
 ## 运行方式
 
 ```bash
-python scripts/tune_lightgbm_baseline.py
+python scripts/boost/tune_lightgbm_baseline.py
 ```
 
 如果要显式使用 108 个 CPU 线程：
 
 ```bash
-LIGHTGBM_N_JOBS=108 python scripts/tune_lightgbm_baseline.py
+LIGHTGBM_N_JOBS=108 python scripts/boost/tune_lightgbm_baseline.py
 ```
 
 ## 断点续跑

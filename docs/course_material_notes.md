@@ -155,11 +155,11 @@
 
 ## 推荐的课程对齐实现顺序
 
-1. `scripts/run_baselines.py`
+1. `scripts/baseline/run_baselines.py`
    - 对齐 `L02-L07`
-2. `scripts/run_clustering.py`
+2. `scripts/clustering/run_clustering.py`
    - 对齐 `L08`
-3. `scripts/compare_advanced_models.py`
+3. `scripts/transformer/compare_advanced_models.py`
    - 把高级模型放回课程 baseline 语境中看
 4. 更进一步的 seed / tuning / structured-transformer 试验
    - 作为开放探索部分

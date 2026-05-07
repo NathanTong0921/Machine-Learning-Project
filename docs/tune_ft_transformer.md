@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/tune_ft_transformer.py](/media/990Pro/ML/scripts/tune_ft_transformer.py)
+对应脚本：[scripts/transformer/tune_ft_transformer.py](/media/990Pro/ML/scripts/transformer/tune_ft_transformer.py)
 
 这个脚本负责给 `FT-Transformer` 做一轮小范围调参，用统一 split 和统一指标筛出当前最优 FT 配置。
 
@@ -32,7 +32,7 @@
 ## 运行方式
 
 ```bash
-python scripts/tune_ft_transformer.py
+python scripts/transformer/tune_ft_transformer.py
 ```
 
 ## 选择规则

@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/run_lightgbm_baseline.py](/media/990Pro/ML/scripts/run_lightgbm_baseline.py)
+对应脚本：[scripts/boost/run_lightgbm_baseline.py](/media/990Pro/ML/scripts/boost/run_lightgbm_baseline.py)
 
 这个脚本负责把 `LightGBM` 作为强表格 boosting baseline 接入当前项目。
 
@@ -26,7 +26,7 @@
 ## 运行方式
 
 ```bash
-python scripts/run_lightgbm_baseline.py
+python scripts/boost/run_lightgbm_baseline.py
 ```
 
 ## 解释建议

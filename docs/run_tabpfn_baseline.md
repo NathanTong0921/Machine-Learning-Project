@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/run_tabpfn_baseline.py](/media/990Pro/ML/scripts/run_tabpfn_baseline.py)
+对应脚本：[scripts/transformer/run_tabpfn_baseline.py](/media/990Pro/ML/scripts/transformer/run_tabpfn_baseline.py)
 
 这个脚本负责把 `TabPFN` 作为一个外部 fancy baseline 接入当前项目。
 
@@ -26,7 +26,7 @@
 ## 运行方式
 
 ```bash
-python scripts/run_tabpfn_baseline.py
+python scripts/transformer/run_tabpfn_baseline.py
 ```
 
 ## 注意事项

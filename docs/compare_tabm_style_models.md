@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/compare_tabm_style_models.py](/media/990Pro/ML/scripts/compare_tabm_style_models.py)
+对应脚本：[scripts/mlp/compare_tabm_style_models.py](/media/990Pro/ML/scripts/mlp/compare_tabm_style_models.py)
 
 这个脚本负责比较：
 
@@ -37,7 +37,7 @@
 ## 运行方式
 
 ```bash
-python scripts/compare_tabm_style_models.py
+python scripts/mlp/compare_tabm_style_models.py
 ```
 
 ## 解释建议

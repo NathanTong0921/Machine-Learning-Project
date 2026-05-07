@@ -49,8 +49,8 @@
 ## 下一步建议
 
 - 在 `src/preprocessing.py` 完成列名清洗、类别列/数值列划分和预处理 pipeline
-- 从 `scripts/prepare_data.py` 开始跑数据检查与拆分
-- 从 `scripts/run_baselines.py` 开始跑 baseline
+- 从 `scripts/preprocessing/prepare_data.py` 开始跑数据检查与拆分
+- 从 `scripts/baseline/run_baselines.py` 开始跑 baseline
 - 在 `src/advanced_models.py` 实现 `Multi-View Gated MLP`
 
 ## 分工

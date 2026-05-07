@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/check_viewwise_gated_ft_stability.py](/media/990Pro/ML/scripts/check_viewwise_gated_ft_stability.py)
+对应脚本：[scripts/transformer/check_viewwise_gated_ft_stability.py](/media/990Pro/ML/scripts/transformer/check_viewwise_gated_ft_stability.py)
 
 这个脚本负责对当前最佳 `View-Wise Gated FT-Transformer` 配置做 seed 稳定性测试。
 
@@ -34,7 +34,7 @@
 ## 运行方式
 
 ```bash
-python scripts/check_viewwise_gated_ft_stability.py
+python scripts/transformer/check_viewwise_gated_ft_stability.py
 ```
 
 ## 解释建议

@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/run_feature_engineered_baselines.py](/media/990Pro/ML/scripts/run_feature_engineered_baselines.py)
+对应脚本：[scripts/feature_engineering/run_feature_engineered_baselines.py](/media/990Pro/ML/scripts/feature_engineering/run_feature_engineered_baselines.py)
 
 这个脚本负责补一条课程材料非常自然的 baseline 线：
 
@@ -50,7 +50,7 @@
 ## 运行方式
 
 ```bash
-python scripts/run_feature_engineered_baselines.py
+python scripts/feature_engineering/run_feature_engineered_baselines.py
 ```
 
 ## 解释建议

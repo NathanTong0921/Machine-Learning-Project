@@ -68,41 +68,41 @@ The same module also provides:
 
 | Script | Purpose |
 | --- | --- |
-| `scripts/prepare_data.py` | Cleans raw data and creates processed train/test splits. |
-| `scripts/run_baselines.py` | Runs the main classical baseline models. |
-| `scripts/run_feature_engineered_baselines.py` | Runs polynomial/RBF/engineered-feature baselines. |
-| `scripts/search_and_ensemble_baselines.py` | Performs broader baseline search and builds ensemble comparisons. |
-| `scripts/run_balanced_rf_baseline.py` | Runs a balanced random forest baseline. |
-| `scripts/run_catboost_baseline.py` | Runs the base CatBoost baseline. |
-| `scripts/tune_catboost_baseline.py` | Runs 10-fold CatBoost hyperparameter tuning. |
-| `scripts/run_lightgbm_baseline.py` | Runs the base LightGBM baseline. |
-| `scripts/tune_lightgbm_baseline.py` | Runs 10-fold LightGBM hyperparameter search. Uses `LIGHTGBM_N_JOBS` for thread control. |
-| `scripts/run_xgboost_baseline.py` | Runs the XGBoost baseline. |
-| `scripts/run_tabpfn_baseline.py` | Attempts a TabPFN baseline and records blocker/metadata if unavailable. |
-| `scripts/run_clustering.py` | Runs clustering analysis for exploratory unsupervised comparison. |
-| `scripts/run_advanced.py` | Runs the main advanced neural model experiment. |
+| `scripts/preprocessing/prepare_data.py` | Cleans raw data and creates processed train/test splits. |
+| `scripts/baseline/run_baselines.py` | Runs the main classical baseline models. |
+| `scripts/feature_engineering/run_feature_engineered_baselines.py` | Runs polynomial/RBF/engineered-feature baselines. |
+| `scripts/ensemble/search_and_ensemble_baselines.py` | Performs broader baseline search and builds ensemble comparisons. |
+| `scripts/bagging/run_balanced_rf_baseline.py` | Runs a balanced random forest baseline. |
+| `scripts/boost/run_catboost_baseline.py` | Runs the base CatBoost baseline. |
+| `scripts/boost/tune_catboost_baseline.py` | Runs 10-fold CatBoost hyperparameter tuning. |
+| `scripts/boost/run_lightgbm_baseline.py` | Runs the base LightGBM baseline. |
+| `scripts/boost/tune_lightgbm_baseline.py` | Runs 10-fold LightGBM hyperparameter search. Uses `LIGHTGBM_N_JOBS` for thread control. |
+| `scripts/boost/run_xgboost_baseline.py` | Runs the XGBoost baseline. |
+| `scripts/transformer/run_tabpfn_baseline.py` | Attempts a TabPFN baseline and records blocker/metadata if unavailable. |
+| `scripts/clustering/run_clustering.py` | Runs clustering analysis for exploratory unsupervised comparison. |
+| `scripts/mlp/run_advanced.py` | Runs the main advanced neural model experiment. |
 
 ## Advanced Comparison Scripts
 
 | Script | Purpose |
 | --- | --- |
-| `scripts/compare_advanced_models.py` | Compares advanced neural tabular models. |
-| `scripts/compare_structured_tabular_transformers.py` | Compares structured transformer variants. |
-| `scripts/compare_viewwise_gated_transformers.py` | Compares view-wise gated transformer designs. |
-| `scripts/compare_attention_pooled_viewwise_transformers.py` | Compares attention-pooled view-wise transformer variants. |
-| `scripts/compare_piecewise_numerical_models.py` | Compares piecewise numerical tokenization models. |
-| `scripts/compare_tabm_style_models.py` | Compares TabM-style multi-expert models. |
-| `scripts/compare_trompt_style_models.py` | Compares Trompt-style prompt transformer models. |
-| `scripts/tune_ft_transformer.py` | Tunes FT-Transformer settings. |
-| `scripts/check_ft_transformer_stability.py` | Checks FT-Transformer seed stability. |
-| `scripts/check_viewwise_gated_ft_stability.py` | Checks view-wise gated FT-Transformer seed stability. |
+| `scripts/transformer/compare_advanced_models.py` | Compares advanced neural tabular models. |
+| `scripts/transformer/compare_structured_tabular_transformers.py` | Compares structured transformer variants. |
+| `scripts/transformer/compare_viewwise_gated_transformers.py` | Compares view-wise gated transformer designs. |
+| `scripts/transformer/compare_attention_pooled_viewwise_transformers.py` | Compares attention-pooled view-wise transformer variants. |
+| `scripts/transformer/compare_piecewise_numerical_models.py` | Compares piecewise numerical tokenization models. |
+| `scripts/mlp/compare_tabm_style_models.py` | Compares TabM-style multi-expert models. |
+| `scripts/transformer/compare_trompt_style_models.py` | Compares Trompt-style prompt transformer models. |
+| `scripts/transformer/tune_ft_transformer.py` | Tunes FT-Transformer settings. |
+| `scripts/transformer/check_ft_transformer_stability.py` | Checks FT-Transformer seed stability. |
+| `scripts/transformer/check_viewwise_gated_ft_stability.py` | Checks view-wise gated FT-Transformer seed stability. |
 
 ## Summary Scripts
 
 | Script | Purpose |
 | --- | --- |
-| `scripts/summarize_results.py` | Aggregates classification metrics into a readable summary. |
-| `scripts/summarize_primary_contenders.py` | Summarizes the strongest candidate models for final comparison. |
+| `scripts/reporting/summarize_results.py` | Aggregates classification metrics into a readable summary. |
+| `scripts/reporting/summarize_primary_contenders.py` | Summarizes the strongest candidate models for final comparison. |
 
 ## Documentation Files
 
@@ -122,36 +122,36 @@ The same module also provides:
 1. Prepare data:
 
 ```bash
-python scripts/prepare_data.py
+python scripts/preprocessing/prepare_data.py
 ```
 
 2. Run baseline models:
 
 ```bash
-python scripts/run_baselines.py
-python scripts/run_lightgbm_baseline.py
-python scripts/run_catboost_baseline.py
+python scripts/baseline/run_baselines.py
+python scripts/boost/run_lightgbm_baseline.py
+python scripts/boost/run_catboost_baseline.py
 ```
 
 3. Run tuned models:
 
 ```bash
-python scripts/tune_catboost_baseline.py
-LIGHTGBM_N_JOBS=108 python scripts/tune_lightgbm_baseline.py
+python scripts/boost/tune_catboost_baseline.py
+LIGHTGBM_N_JOBS=108 python scripts/boost/tune_lightgbm_baseline.py
 ```
 
 4. Run advanced model comparisons:
 
 ```bash
-python scripts/compare_advanced_models.py
-python scripts/compare_viewwise_gated_transformers.py
+python scripts/transformer/compare_advanced_models.py
+python scripts/transformer/compare_viewwise_gated_transformers.py
 ```
 
 5. Summarize results:
 
 ```bash
-python scripts/summarize_results.py
-python scripts/summarize_primary_contenders.py
+python scripts/reporting/summarize_results.py
+python scripts/reporting/summarize_primary_contenders.py
 ```
 
 ## Notes For Handoff

@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/summarize_primary_contenders.py](/media/990Pro/ML/scripts/summarize_primary_contenders.py)
+对应脚本：[scripts/reporting/summarize_primary_contenders.py](/media/990Pro/ML/scripts/reporting/summarize_primary_contenders.py)
 
 这个脚本把当前最重要的几条主线汇总到一张总表中：
 
@@ -20,5 +20,5 @@
 ## 运行方式
 
 ```bash
-python scripts/summarize_primary_contenders.py
+python scripts/reporting/summarize_primary_contenders.py
 ```

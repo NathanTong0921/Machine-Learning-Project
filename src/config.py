@@ -19,7 +19,6 @@ LABELS = ["Dropout", "Enrolled", "Graduate"]
 CATEGORICAL_COLUMNS = {
     "Marital status",
     "Application mode",
-    "Application order",
     "Course",
     "Daytime/evening attendance",
     "Previous qualification",

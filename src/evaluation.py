@@ -8,6 +8,7 @@ from sklearn.metrics import (
     classification_report,
     confusion_matrix,
     f1_score,
+    fowlkes_mallows_score,
     precision_score,
     recall_score,
     roc_auc_score,
@@ -22,7 +23,15 @@ def classification_metrics(y_true, y_pred, y_prob=None, labels=None):
         "recall_macro": recall_score(y_true, y_pred, average="macro", zero_division=0),
         "f1_macro": f1_score(y_true, y_pred, average="macro", zero_division=0),
         "f1_weighted": f1_score(y_true, y_pred, average="weighted", zero_division=0),
+        "fmi": fowlkes_mallows_score(y_true, y_pred),
     }
+
+    if labels is not None:
+        cm = confusion_matrix(y_true, y_pred, labels=labels)
+        support = cm.sum(axis=1)
+        for idx, label in enumerate(labels):
+            key = str(label).lower()
+            metrics[f"{key}_accuracy"] = cm[idx, idx] / support[idx] if support[idx] else 0.0
 
     if y_prob is not None and labels is not None:
         y_true_bin = label_binarize(y_true, classes=labels)

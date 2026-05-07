@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/search_and_ensemble_baselines.py](/media/990Pro/ML/scripts/search_and_ensemble_baselines.py)
+对应脚本：[scripts/ensemble/search_and_ensemble_baselines.py](/media/990Pro/ML/scripts/ensemble/search_and_ensemble_baselines.py)
 
 这个脚本把两条课程主线合并在一起：
 
@@ -58,7 +58,7 @@
 ## 运行方式
 
 ```bash
-python scripts/search_and_ensemble_baselines.py
+python scripts/ensemble/search_and_ensemble_baselines.py
 ```
 
 ## 解释建议

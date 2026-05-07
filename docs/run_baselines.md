@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/run_baselines.py](/media/990Pro/ML/scripts/run_baselines.py)
+对应脚本：[scripts/baseline/run_baselines.py](/media/990Pro/ML/scripts/baseline/run_baselines.py)
 
 这个脚本负责完成课程项目中的监督学习 baseline，对训练集建模、在测试集评估，并保存指标与混淆矩阵。
 
@@ -44,7 +44,7 @@
 ## 运行方式
 
 ```bash
-python scripts/run_baselines.py
+python scripts/baseline/run_baselines.py
 ```
 
 ## 记录建议

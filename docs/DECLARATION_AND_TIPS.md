@@ -16,7 +16,7 @@
 
 ## Suggested Script Order
 
-1. `python scripts/prepare_data.py`
-2. `python scripts/run_clustering.py`
-3. `python scripts/run_baselines.py`
-4. `python scripts/run_advanced.py`
+1. `python scripts/preprocessing/prepare_data.py`
+2. `python scripts/clustering/run_clustering.py`
+3. `python scripts/baseline/run_baselines.py`
+4. `python scripts/mlp/run_advanced.py`

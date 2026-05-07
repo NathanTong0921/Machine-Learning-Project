@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/run_balanced_rf_baseline.py](/media/990Pro/ML/scripts/run_balanced_rf_baseline.py)
+对应脚本：[scripts/bagging/run_balanced_rf_baseline.py](/media/990Pro/ML/scripts/bagging/run_balanced_rf_baseline.py)
 
 这个脚本负责把 `BalancedRandomForestClassifier` 作为不平衡类别友好的 baseline 接入当前项目。
 
@@ -26,7 +26,7 @@
 ## 运行方式
 
 ```bash
-python scripts/run_balanced_rf_baseline.py
+python scripts/bagging/run_balanced_rf_baseline.py
 ```
 
 ## 解释建议

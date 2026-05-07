@@ -58,8 +58,8 @@ Completed:
 Refresh summaries when producing final tables:
 
 ```bash
-python scripts/summarize_results.py
-python scripts/summarize_primary_contenders.py
+python scripts/reporting/summarize_results.py
+python scripts/reporting/summarize_primary_contenders.py
 ```
 
 Conclusion:

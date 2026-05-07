@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/run_catboost_baseline.py](/media/990Pro/ML/scripts/run_catboost_baseline.py)
+对应脚本：[scripts/boost/run_catboost_baseline.py](/media/990Pro/ML/scripts/boost/run_catboost_baseline.py)
 
 这个脚本负责把 `CatBoost` 作为最优先的强表格 baseline 接入当前项目。
 
@@ -26,7 +26,7 @@
 ## 运行方式
 
 ```bash
-python scripts/run_catboost_baseline.py
+python scripts/boost/run_catboost_baseline.py
 ```
 
 ## 解释建议

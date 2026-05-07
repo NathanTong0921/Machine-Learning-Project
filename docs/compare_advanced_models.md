@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/compare_advanced_models.py](/media/990Pro/ML/scripts/compare_advanced_models.py)
+对应脚本：[scripts/transformer/compare_advanced_models.py](/media/990Pro/ML/scripts/transformer/compare_advanced_models.py)
 
 这个脚本负责在同一套 `train/test` 数据划分下，正式比较：
 
@@ -60,7 +60,7 @@
 ## 运行方式
 
 ```bash
-python scripts/compare_advanced_models.py
+python scripts/transformer/compare_advanced_models.py
 ```
 
 ## 记录建议

@@ -2,7 +2,7 @@
 
 ## 作用
 
-对应脚本：[scripts/summarize_results.py](/media/990Pro/ML/scripts/summarize_results.py)
+对应脚本：[scripts/reporting/summarize_results.py](/media/990Pro/ML/scripts/reporting/summarize_results.py)
 
 这个脚本负责把 baseline 和高级模型的结果统一整理成报告可直接使用的资产：
 
@@ -30,7 +30,7 @@
 ## 运行方式
 
 ```bash
-python scripts/summarize_results.py
+python scripts/reporting/summarize_results.py
 ```
 
 ## 当前用途
