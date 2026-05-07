@@ -9,6 +9,8 @@ INTERIM_DIR = PROJECT_ROOT / "data" / "interim"
 PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
 FIGURE_DIR = PROJECT_ROOT / "reports" / "figures"
 MODEL_DIR = PROJECT_ROOT / "models" / "saved_models"
+MODEL_DIR_MLP = MODEL_DIR / "mlp"
+MODEL_DIR_TRANSFORMER = MODEL_DIR / "transformer"
 METRICS_DIR = PROJECT_ROOT / "models" / "metrics"
 
 TARGET_COL = "Target"

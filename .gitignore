@@ -7,7 +7,6 @@ __pycache__/
 
 logs/
 catboost_info/
-models/saved_models/
 reports/figures/
 submission/*.zip
 data/interim/

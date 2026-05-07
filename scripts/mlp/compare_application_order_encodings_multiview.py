@@ -22,7 +22,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.advanced_models import train_multiview_gated_mlp
-from src.config import FEATURE_GROUPS, FIGURE_DIR, LABELS, METRICS_DIR, MODEL_DIR, PROCESSED_DIR, TARGET_COL
+from src.config import FEATURE_GROUPS, FIGURE_DIR, LABELS, METRICS_DIR, MODEL_DIR_MLP, PROCESSED_DIR, TARGET_COL
 from src.evaluation import classification_details, classification_metrics, save_metrics_table
 from src.visualization import save_confusion_matrix
 
@@ -176,7 +176,7 @@ def save_artifacts(name, result, metrics):
                 "metrics": metrics,
             },
         },
-        MODEL_DIR / f"{safe_name}.pt",
+        MODEL_DIR_MLP / f"{safe_name}.pt",
     )
 
 
@@ -203,7 +203,7 @@ def main():
     train_df = pd.read_csv(train_path)
     test_df = pd.read_csv(test_path)
     METRICS_DIR.mkdir(parents=True, exist_ok=True)
-    MODEL_DIR.mkdir(parents=True, exist_ok=True)
+    MODEL_DIR_MLP.mkdir(parents=True, exist_ok=True)
     FIGURE_DIR.mkdir(parents=True, exist_ok=True)
 
     records = []

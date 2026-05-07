@@ -23,7 +23,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.advanced_models import train_multiview_gated_mlp
-from src.config import FIGURE_DIR, LABELS, METRICS_DIR, MODEL_DIR, PROCESSED_DIR
+from src.config import FIGURE_DIR, LABELS, METRICS_DIR, MODEL_DIR_MLP, PROCESSED_DIR
 from src.evaluation import classification_details, classification_metrics, save_metrics_table
 from src.visualization import save_confusion_matrix
 
@@ -69,13 +69,13 @@ def main():
     gate_summary.to_csv(METRICS_DIR / "multiview_gate_summary.csv", index=False)
     pd.DataFrame(result["metadata"]["history"]).to_csv(METRICS_DIR / "advanced_training_history.csv", index=False)
 
-    MODEL_DIR.mkdir(parents=True, exist_ok=True)
+    MODEL_DIR_MLP.mkdir(parents=True, exist_ok=True)
     torch.save(
         {
             "state_dict": result["model"].state_dict(),
             "metadata": {k: v for k, v in result["metadata"].items() if k != "history"},
         },
-        MODEL_DIR / "multiview_gated_mlp.pt",
+        MODEL_DIR_MLP / "multiview_gated_mlp.pt",
     )
     with open(METRICS_DIR / "advanced_metadata.json", "w", encoding="utf-8") as f:
         json.dump(result["metadata"], f, ensure_ascii=False, indent=2)
@@ -85,7 +85,7 @@ def main():
     print(f"saved metrics: {METRICS_DIR / 'advanced_metrics.csv'}")
     print(f"saved gate summary: {METRICS_DIR / 'multiview_gate_summary.csv'}")
     print(f"saved history: {METRICS_DIR / 'advanced_training_history.csv'}")
-    print(f"saved model: {MODEL_DIR / 'multiview_gated_mlp.pt'}")
+    print(f"saved model: {MODEL_DIR_MLP / 'multiview_gated_mlp.pt'}")
 
 
 if __name__ == "__main__":

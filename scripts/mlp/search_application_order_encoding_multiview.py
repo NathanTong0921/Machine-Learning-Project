@@ -13,15 +13,28 @@ import pandas as pd
 PROJECT_ROOT = next(parent for parent in Path(__file__).resolve().parents if (parent / "src").is_dir())
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
 
-from scripts.mlp.compare_application_order_encodings_multiview import (
-    add_oof_target_encoding,
-    add_thermometer_features,
-    evaluate_variant,
-    make_feature_groups,
-    save_artifacts,
-)
-from src.config import FEATURE_GROUPS, METRICS_DIR, MODEL_DIR, PROCESSED_DIR, TARGET_COL
+try:
+    from scripts.mlp.compare_application_order_encodings_multiview import (
+        add_oof_target_encoding,
+        add_thermometer_features,
+        evaluate_variant,
+        make_feature_groups,
+        save_artifacts,
+    )
+except ModuleNotFoundError:
+    # 兼容通过相对路径执行脚本的场景（例如 python scripts/mlp/search_application_order_encoding_multiview.py）
+    from compare_application_order_encodings_multiview import (
+        add_oof_target_encoding,
+        add_thermometer_features,
+        evaluate_variant,
+        make_feature_groups,
+        save_artifacts,
+    )
+from src.config import FEATURE_GROUPS, METRICS_DIR, MODEL_DIR_MLP, PROCESSED_DIR, TARGET_COL
 from src.evaluation import save_metrics_table
 
 
@@ -164,9 +177,9 @@ def main():
 
         if best_record is None or record["f1_macro"] > best_record["f1_macro"]:
             best_record = record
-            best_checkpoint = MODEL_DIR / f"{variant_prefix}_best.pt"
+            best_checkpoint = MODEL_DIR_MLP / f"{variant_prefix}_best.pt"
             save_artifacts(f"{variant_prefix}_best", result, record)
-            tmp_ckpt = MODEL_DIR / f"multiview_application_order_encoding_{variant_prefix}_best.pt"
+            tmp_ckpt = MODEL_DIR_MLP / f"multiview_application_order_encoding_{variant_prefix}_best.pt"
             if tmp_ckpt.exists() and tmp_ckpt != best_checkpoint:
                 shutil.copyfile(tmp_ckpt, best_checkpoint)
             with open(best_json_path, "w", encoding="utf-8") as f:

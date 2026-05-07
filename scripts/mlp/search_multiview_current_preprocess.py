@@ -19,7 +19,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.advanced_models import train_multiview_gated_mlp
-from src.config import CATEGORICAL_COLUMNS, LABELS, METRICS_DIR, MODEL_DIR, PROCESSED_DIR
+from src.config import CATEGORICAL_COLUMNS, LABELS, METRICS_DIR, MODEL_DIR_MLP, PROCESSED_DIR
 from src.evaluation import classification_metrics, save_metrics_table
 
 
@@ -171,9 +171,9 @@ def main():
     shard_configs = [cfg for idx, cfg in enumerate(all_configs) if idx % args.num_shards == args.shard_index]
 
     METRICS_DIR.mkdir(parents=True, exist_ok=True)
-    MODEL_DIR.mkdir(parents=True, exist_ok=True)
+    MODEL_DIR_MLP.mkdir(parents=True, exist_ok=True)
     shard_csv = METRICS_DIR / f"{MODEL_PREFIX}_shard{args.shard_index}_of{args.num_shards}.csv"
-    best_ckpt = MODEL_DIR / f"{MODEL_PREFIX}_best_shard{args.shard_index}_of{args.num_shards}.pt"
+    best_ckpt = MODEL_DIR_MLP / f"{MODEL_PREFIX}_best_shard{args.shard_index}_of{args.num_shards}.pt"
 
     records = []
     best_f1 = -1.0

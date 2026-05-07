@@ -26,7 +26,7 @@ from src.advanced_models import (
     train_multiview_gated_mlp,
     train_viewwise_gated_ft_transformer,
 )
-from src.config import FIGURE_DIR, LABELS, METRICS_DIR, MODEL_DIR, PROCESSED_DIR
+from src.config import FIGURE_DIR, LABELS, METRICS_DIR, MODEL_DIR_TRANSFORMER, PROCESSED_DIR
 from src.evaluation import classification_details, classification_metrics, save_metrics_table
 from src.visualization import save_confusion_matrix, save_confusion_matrix_grid, save_metrics_table_figure
 
@@ -71,13 +71,13 @@ VIEWWISE_GATED_FT_CONFIG = {
 
 
 def save_model_artifacts(result, checkpoint_name, metadata_name, gate_name=None):
-    MODEL_DIR.mkdir(parents=True, exist_ok=True)
+    MODEL_DIR_TRANSFORMER.mkdir(parents=True, exist_ok=True)
     torch.save(
         {
             "state_dict": result["model"].state_dict(),
             "metadata": {k: v for k, v in result["metadata"].items() if k != "history"},
         },
-        MODEL_DIR / checkpoint_name,
+        MODEL_DIR_TRANSFORMER / checkpoint_name,
     )
     with open(METRICS_DIR / metadata_name, "w", encoding="utf-8") as f:
         json.dump(result["metadata"], f, ensure_ascii=False, indent=2)

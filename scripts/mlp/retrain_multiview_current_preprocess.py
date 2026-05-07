@@ -17,7 +17,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.advanced_models import train_multiview_gated_mlp
-from src.config import CATEGORICAL_COLUMNS, FIGURE_DIR, LABELS, METRICS_DIR, MODEL_DIR, PROCESSED_DIR
+from src.config import CATEGORICAL_COLUMNS, FIGURE_DIR, LABELS, METRICS_DIR, MODEL_DIR_MLP, PROCESSED_DIR
 from src.evaluation import classification_details, classification_metrics, save_metrics_table
 from src.visualization import save_confusion_matrix
 
@@ -55,7 +55,7 @@ def main():
     details = classification_details(result["test_true_labels"], result["test_pred_labels"], labels=LABELS)
 
     METRICS_DIR.mkdir(parents=True, exist_ok=True)
-    MODEL_DIR.mkdir(parents=True, exist_ok=True)
+    MODEL_DIR_MLP.mkdir(parents=True, exist_ok=True)
     FIGURE_DIR.mkdir(parents=True, exist_ok=True)
 
     save_metrics_table([metrics], METRICS_DIR / f"{MODEL_NAME}_metrics.csv")
@@ -76,7 +76,7 @@ def main():
             "state_dict": result["model"].state_dict(),
             "metadata": metadata,
         },
-        MODEL_DIR / f"{MODEL_NAME}.pt",
+        MODEL_DIR_MLP / f"{MODEL_NAME}.pt",
     )
 
     save_confusion_matrix(
@@ -90,7 +90,7 @@ def main():
     print(details["report"])
     print(metrics)
     print(f"saved metrics: {METRICS_DIR / f'{MODEL_NAME}_metrics.csv'}")
-    print(f"saved checkpoint: {MODEL_DIR / f'{MODEL_NAME}.pt'}")
+    print(f"saved checkpoint: {MODEL_DIR_MLP / f'{MODEL_NAME}.pt'}")
     print(f"saved confusion matrix: {FIGURE_DIR / f'cm_{MODEL_NAME}.png'}")
 
 
