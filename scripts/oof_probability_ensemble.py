@@ -4,8 +4,8 @@ Declaration:
 - This script tunes ensemble weights only on out-of-fold training predictions.
 - It then refits available members on the full training split and evaluates the
   fixed-weight ensemble on the held-out test split.
-- Current members: tuned CatBoost, best MultiViewGatedMLP, optional TabPFN.
-- LightGBM tuned can be added after its grid search finishes.
+- Current members: tuned CatBoost, tuned LightGBM, best MultiViewGatedMLP,
+  optional TabPFN.
 """
 
 import json
@@ -16,6 +16,7 @@ import sys
 import numpy as np
 import pandas as pd
 from catboost import CatBoostClassifier
+from lightgbm import LGBMClassifier
 from sklearn.metrics import classification_report, f1_score
 from sklearn.model_selection import StratifiedKFold
 
@@ -30,6 +31,7 @@ from src.evaluation import classification_metrics, save_metrics_table
 
 CV_SPLITS = 5
 WEIGHT_STEP = 0.05
+LIGHTGBM_N_JOBS = int(os.environ.get("LIGHTGBM_N_JOBS", "108"))
 BEST_MV_CONFIG = {
     "seed": 62,
     "hidden_dim": 64,
@@ -48,6 +50,14 @@ def load_catboost_params():
         return json.load(f)
 
 
+def load_lightgbm_params():
+    path = METRICS_DIR / "lightgbm_tuned_best_params.json"
+    if not path.exists():
+        raise FileNotFoundError("Missing lightgbm_tuned_best_params.json.")
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
 def prepare_catboost_xy(df):
     X = df.drop(columns=[TARGET_COL]).copy()
     y = df[TARGET_COL].copy()
@@ -56,6 +66,15 @@ def prepare_catboost_xy(df):
     for col in cat_cols:
         X[col] = X[col].astype(str)
     return X, y, cat_idx
+
+
+def prepare_lightgbm_xy(df):
+    X = df.drop(columns=[TARGET_COL]).copy()
+    y = df[TARGET_COL].copy()
+    cat_cols = [col for col in X.columns if col in CATEGORICAL_COLUMNS]
+    for col in cat_cols:
+        X[col] = X[col].astype("category")
+    return X, y, cat_cols
 
 
 def align_proba(proba, classes):
@@ -93,6 +112,43 @@ def catboost_oof_and_test(train_df, test_df):
 
     model = make_catboost(params)
     model.fit(X, y, cat_features=cat_idx)
+    test_proba = align_proba(model.predict_proba(X_test), model.classes_)
+    return oof, test_proba
+
+
+def lightgbm_oof_and_test(train_df, test_df):
+    params = load_lightgbm_params()
+    X, y, cat_cols = prepare_lightgbm_xy(train_df)
+    X_test, _, _ = prepare_lightgbm_xy(test_df)
+    cv = StratifiedKFold(n_splits=CV_SPLITS, shuffle=True, random_state=RANDOM_STATE)
+
+    oof = np.zeros((len(train_df), len(LABELS)), dtype=float)
+    for fold_idx, (train_idx, valid_idx) in enumerate(cv.split(X, y), start=1):
+        print(f"[PROGRESS] member=lightgbm_tuned fold={fold_idx}/{CV_SPLITS}", flush=True)
+        model = LGBMClassifier(
+            objective="multiclass",
+            class_weight="balanced",
+            random_state=RANDOM_STATE + fold_idx,
+            verbosity=-1,
+            n_jobs=LIGHTGBM_N_JOBS,
+            **params,
+        )
+        model.fit(
+            X.iloc[train_idx],
+            y.iloc[train_idx],
+            categorical_feature=cat_cols,
+        )
+        oof[valid_idx] = align_proba(model.predict_proba(X.iloc[valid_idx]), model.classes_)
+
+    model = LGBMClassifier(
+        objective="multiclass",
+        class_weight="balanced",
+        random_state=RANDOM_STATE,
+        verbosity=-1,
+        n_jobs=LIGHTGBM_N_JOBS,
+        **params,
+    )
+    model.fit(X, y, categorical_feature=cat_cols)
     test_proba = align_proba(model.predict_proba(X_test), model.classes_)
     return oof, test_proba
 
@@ -207,6 +263,7 @@ def main():
     member_outputs = []
     for name, builder in [
         ("catboost_tuned", catboost_oof_and_test),
+        ("lightgbm_tuned", lightgbm_oof_and_test),
         ("multiview_gated_mlp_best", multiview_oof_and_test),
         ("tabpfn", tabpfn_oof_and_test),
     ]:
@@ -244,17 +301,32 @@ def main():
         "members": member_names,
         "weights": {name: float(weight) for name, weight in zip(member_names, weights)},
         "oof_f1_macro": float(best_score),
-        "note": "LightGBM tuned should be added after its grid search finishes.",
+        "note": f"Weight grid step={WEIGHT_STEP}; LightGBM n_jobs={LIGHTGBM_N_JOBS}.",
     }
     weights_path = METRICS_DIR / "oof_probability_ensemble_best_weights.json"
     with open(weights_path, "w", encoding="utf-8") as f:
         json.dump(weights_payload, f, ensure_ascii=False, indent=2)
+
+    proba_cache_path = METRICS_DIR / "oof_probability_ensemble_probas.npz"
+    np.savez_compressed(
+        proba_cache_path,
+        member_names=np.array(member_names),
+        labels=np.array(LABELS),
+        y_train=np.asarray(y_train),
+        y_test=np.asarray(y_test),
+        weights=weights,
+        oof_probas=np.stack(oof_probas, axis=0),
+        test_probas=np.stack(test_probas, axis=0),
+        ensemble_oof=ensemble_oof,
+        ensemble_test=ensemble_test,
+    )
 
     print(pd.DataFrame(all_metrics).to_string(index=False))
     print(f"best weights: {weights_payload}")
     print(f"saved metrics: {metrics_path}")
     print(f"saved grid: {grid_path}")
     print(f"saved best weights: {weights_path}")
+    print(f"saved probability cache: {proba_cache_path}")
 
 
 if __name__ == "__main__":

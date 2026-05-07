@@ -2,8 +2,8 @@
 
 ## Current Findings
 
-- Current best macro-F1 is still around `0.722`, led by `catboost_tuned` and `multiview_gated_mlp_best`.
-- `LightGBM tuned` is still worth finishing because partial CV already reached about `0.7234`.
+- Current best macro-F1 is `0.73425`, from the OOF probability ensemble with added semester-feature tree members.
+- `LightGBM tuned` finished its 10-fold grid search with CV macro-F1 `0.72764`, but held-out test macro-F1 was only `0.70423`.
 - `Enrolled` is the hardest class. It is only about `17.95%` of the full dataset according to the external visualization analysis.
 - Cost-sensitive MultiViewGatedMLP improves `Enrolled` recall/F1 but reduces global macro-F1.
 - 5-fold CV confirms the same tradeoff:
@@ -48,14 +48,27 @@
 
 ### P0. Finish Tuned LightGBM
 
-- Let `scripts/tune_lightgbm_baseline.py` finish on the external CPU machine.
-- Compare final `lightgbm_tuned_metrics.csv` against `catboost_tuned_metrics.csv`.
-- Refresh summaries after completion:
+Completed:
+
+- Best CV macro-F1: `0.72764`
+- Best params: `learning_rate=0.03`, `n_estimators=300`, `num_leaves=63`, `min_child_samples=40`, `max_depth=-1`, `colsample_bytree=1.0`, `subsample=0.8`
+- Held-out test macro-F1: `0.70423`
+- Held-out test Enrolled recall/F1: `0.50000 / 0.49174`
+
+Refresh summaries when producing final tables:
 
 ```bash
 python scripts/summarize_results.py
 python scripts/summarize_primary_contenders.py
 ```
+
+Conclusion:
+
+- Do not use LightGBM tuned as the primary single model.
+- Keep it only as a candidate ensemble member or supporting negative result.
+- Adding semester ratio/delta features rescues LightGBM substantially:
+  - `lightgbm_tuned`: test macro-F1 `0.70423`
+  - `lightgbm_tuned_semester`: test macro-F1 `0.72142`
 
 ### P0. TargetEncoder + Semester Ratio Features
 
@@ -92,7 +105,7 @@ Current result:
 
 ### P1. OOF Probability Ensemble
 
-After LightGBM tuning is complete, build an out-of-fold probability ensemble:
+Build an out-of-fold probability ensemble:
 
 - `catboost_tuned`
 - `lightgbm_tuned`
@@ -106,11 +119,12 @@ Rules:
 - Tune weights only on CV/OOF predictions.
 - Do not tune on the final test set.
 
-Current scaffold result without LightGBM:
+Current result with LightGBM candidate:
 
-- Members: `catboost_tuned`, `multiview_gated_mlp_best`, `tabpfn`
+- Members: `catboost_tuned`, `lightgbm_tuned`, `multiview_gated_mlp_best`, `tabpfn`
 - Best OOF weights:
   - `catboost_tuned = 0.50`
+  - `lightgbm_tuned = 0.00`
   - `multiview_gated_mlp_best = 0.05`
   - `tabpfn = 0.45`
 - OOF macro-F1: `0.73134`
@@ -122,7 +136,31 @@ Current scaffold result without LightGBM:
 Conclusion:
 
 - This is currently the strongest result by macro-F1.
-- Add `lightgbm_tuned` to this ensemble after the LightGBM grid search finishes.
+- LightGBM was tested inside the ensemble but received zero weight, so it does not improve the ensemble.
+
+Updated ensemble with semester-feature tree members:
+
+- Added candidates:
+  - `catboost_tuned_semester`
+  - `lightgbm_tuned_semester`
+- Best OOF weights:
+  - `catboost_tuned = 0.00`
+  - `lightgbm_tuned = 0.30`
+  - `multiview_gated_mlp_best = 0.00`
+  - `tabpfn = 0.20`
+  - `catboost_tuned_semester = 0.50`
+  - `lightgbm_tuned_semester = 0.00`
+- OOF macro-F1: `0.73889`
+- Test macro-F1: `0.73425`
+- Test accuracy: `0.78238`
+- Test AUC: `0.90127`
+- Test Enrolled recall/F1: `0.57983 / 0.54871`
+
+Conclusion:
+
+- This is the new strongest macro-F1 result.
+- Semester features are useful mostly through ensemble diversity, not as a standalone CatBoost replacement.
+- The raw LightGBM member receives weight despite weak standalone test macro-F1, suggesting it contributes complementary probability structure in the ensemble.
 
 ### P1. Decision Rule / Threshold Optimization
 
@@ -145,6 +183,50 @@ Conclusion:
 
 - Bias optimization helps overall accuracy/AUC and OOF macro-F1, but it does not improve final test macro-F1 or Enrolled recall for CatBoost.
 - Keep raw CatBoost tuned as the main CatBoost result unless the report emphasizes accuracy/AUC instead of macro-F1.
+
+OOF ensemble decision-bias experiment was run on cached ensemble probabilities:
+
+- Best OOF log-probability bias: `Dropout=0.0`, `Enrolled=0.0`, `Graduate=-0.1`
+- OOF macro-F1 improved from `0.73134` to `0.73380`
+- Test macro-F1 changed from `0.73203` to `0.73017`
+- Test accuracy changed from `0.78690` to `0.78087`
+- Test Enrolled recall/F1 changed from `0.53782 / 0.53782` to `0.56303 / 0.54032`
+
+Conclusion:
+
+- Ensemble bias improves Enrolled recall/F1 slightly on test but reduces global macro-F1 and accuracy.
+- Keep raw OOF ensemble as the main best model for macro-F1.
+- Bias-adjusted ensemble can be reported only as an Enrolled-recall tradeoff variant.
+
+OOF ensemble decision-bias was also tested on the new semester-members ensemble:
+
+- Best OOF log-probability bias: `Dropout=0.0`, `Enrolled=0.0`, `Graduate=-0.1`
+- OOF macro-F1 improved from `0.73889` to `0.73923`
+- Test macro-F1 dropped from `0.73425` to `0.72866`
+- Test Enrolled recall/F1 changed from `0.57983 / 0.54871` to `0.58824 / 0.54054`
+
+Conclusion:
+
+- Do not apply bias to the new best ensemble.
+- Bias tuning is useful diagnostic evidence but not a performance improvement for final macro-F1.
+
+### P1. OOF Probability Meta-Learner
+
+Regularized multinomial logistic stacking was tested on OOF probability features:
+
+- Best meta-CV config:
+  - feature set: member probabilities only
+  - `C = 0.1`
+  - `class_weight = balanced`
+- Meta-CV macro-F1: `0.73097 ± 0.01182`
+- Test macro-F1: `0.72257`
+- Test Enrolled recall/F1: `0.65546 / 0.53793`
+
+Conclusion:
+
+- The meta-learner increases Enrolled recall, but hurts global macro-F1.
+- Do not use it as the primary model.
+- Keep it as evidence that class-balanced stacking over-corrects toward the minority Enrolled class.
 
 ### P2. Neural Categorical Embeddings
 
