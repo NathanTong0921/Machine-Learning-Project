@@ -52,3 +52,11 @@
 - 从 `scripts/prepare_data.py` 开始跑数据检查与拆分
 - 从 `scripts/run_baselines.py` 开始跑 baseline
 - 在 `src/advanced_models.py` 实现 `Multi-View Gated MLP`
+
+## 分工
+
+- 预处理：钟卓熹
+- visualization + t-SNE：郭子贤
+- 聚类：童照
+- 监督学习：黄思铭
+- model evaluation + OPEN Ended Exploration：李佳锴、钟卓熹、以上所有做完自己负责部分的人
