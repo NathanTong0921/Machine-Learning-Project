@@ -102,6 +102,7 @@ FT_TRIALS = [
 
 FT_MAX_EPOCHS = 90
 FT_PATIENCE = 16
+TRANSFORMER_METRICS_DIR = METRICS_DIR / "transformer"
 
 
 def main():
@@ -154,9 +155,10 @@ def main():
         ascending=[False, False, False],
     ).reset_index(drop=True)
 
-    output_csv = METRICS_DIR / "ft_tuning_results.csv"
-    output_json = METRICS_DIR / "ft_tuning_best.json"
-    output_md = METRICS_DIR / "ft_tuning_ranked.md"
+    TRANSFORMER_METRICS_DIR.mkdir(parents=True, exist_ok=True)
+    output_csv = TRANSFORMER_METRICS_DIR / "ft_tuning_results.csv"
+    output_json = TRANSFORMER_METRICS_DIR / "ft_tuning_best.json"
+    output_md = TRANSFORMER_METRICS_DIR / "ft_tuning_ranked.md"
     output_png = FIGURE_DIR / "ft_tuning_table.png"
 
     save_metrics_table(df.to_dict(orient="records"), output_csv)
