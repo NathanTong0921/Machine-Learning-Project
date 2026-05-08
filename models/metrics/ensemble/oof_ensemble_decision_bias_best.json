@@ -1,0 +1,15 @@
+{
+  "labels": [
+    "Dropout",
+    "Enrolled",
+    "Graduate"
+  ],
+  "bias": {
+    "Dropout": 0.0,
+    "Enrolled": 0.0,
+    "Graduate": -0.1
+  },
+  "oof_f1_macro": 0.7338038835966266,
+  "source_probability_cache": "/media/990Pro/ML/models/metrics/oof_probability_ensemble_probas.npz",
+  "selection_rule": "maximize OOF macro-F1; held-out test used only once for evaluation"
+}

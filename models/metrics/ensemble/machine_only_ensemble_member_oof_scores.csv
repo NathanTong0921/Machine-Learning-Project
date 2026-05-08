@@ -1,0 +1,11 @@
+member,oof_f1_macro
+gbdt_log_loss,0.7224626273670741
+hist_gradient_boosting,0.7198967372640008
+catboost_tuned,0.7176930944197957
+lightgbm_hist_column_best,0.7121495998753966
+extra_trees,0.7115019041391747
+adaboost_stumps,0.7081780097306841
+lightgbm_tuned,0.7075691431560308
+bagging_decision_tree,0.70362976529355
+pasting_decision_tree,0.703169218397084
+xgboost_hist_column_best,0.7024596972575198

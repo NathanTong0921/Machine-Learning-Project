@@ -1,0 +1,25 @@
+{
+  "members": [
+    "catboost_tuned",
+    "lightgbm_hist_column_best",
+    "gbdt_log_loss"
+  ],
+  "seeds": [
+    42,
+    62,
+    82
+  ],
+  "cv_splits": 5,
+  "excluded": [
+    "MLP",
+    "Transformer",
+    "TabPFN",
+    "all deep-learning members"
+  ],
+  "feature_count": 27,
+  "meta_model": "LogisticRegression(max_iter=5000, class_weight='balanced')",
+  "metric_notes": {
+    "fmi": "Fowlkes-Mallows index from true and predicted class labels.",
+    "class_accuracy": "Per-class accuracy is TP / true class count, equivalent to class recall."
+  }
+}

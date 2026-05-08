@@ -1,0 +1,53 @@
+{
+  "selection_metric": "cv_mean_f1_macro",
+  "cv_splits": 10,
+  "n_jobs": 16,
+  "wide": false,
+  "local": true,
+  "best_params": {
+    "colsample_bytree": 0.95,
+    "learning_rate": 0.05,
+    "max_depth": 5,
+    "min_child_weight": 1,
+    "n_estimators": 350,
+    "reg_lambda": 1.0,
+    "subsample": 0.9
+  },
+  "best_cv_record": {
+    "colsample_bytree": 0.95,
+    "learning_rate": 0.05,
+    "max_depth": 5,
+    "min_child_weight": 1,
+    "n_estimators": 350,
+    "reg_lambda": 1.0,
+    "subsample": 0.9,
+    "cv_mean_f1_macro": 0.7160236631772088,
+    "cv_std_f1_macro": 0.016857364944114696,
+    "cv_mean_enrolled_f1": 0.48626004030814063,
+    "cv_std_enrolled_f1": 0.03580012425040857,
+    "tree_method": "exact",
+    "categorical_handling": "onehot",
+    "n_input_features": 241
+  },
+  "test_metrics": {
+    "accuracy": 0.776355421686747,
+    "precision_macro": 0.7282269808204226,
+    "recall_macro": 0.7036128448857474,
+    "f1_macro": 0.7126702037796565,
+    "f1_weighted": 0.7691594362996145,
+    "fmi": 0.6963432255037594,
+    "dropout_accuracy": 0.7517564402810304,
+    "enrolled_accuracy": 0.4495798319327731,
+    "graduate_accuracy": 0.9095022624434389,
+    "roc_auc_ovr_macro": 0.897432169064574,
+    "model": "xgboost_exact_onehot_local_tuned",
+    "split_algorithm": "exact",
+    "categorical_handling": "onehot",
+    "max_bin": null,
+    "colsample_bytree": 0.95,
+    "n_input_features": 241,
+    "cv_best_f1_macro": 0.7160236631772088,
+    "cv_best_enrolled_f1": 0.48626004030814063
+  },
+  "grid_path": "/home/husrcf/Code/ProtBind/ML/models/metrics/boost/xgboost_exact_onehot_search_grid.csv"
+}

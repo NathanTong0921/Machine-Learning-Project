@@ -1,0 +1,30 @@
+{
+  "members": [
+    "catboost_tuned",
+    "lightgbm_tuned",
+    "multiview_gated_mlp_best",
+    "tabpfn",
+    "catboost_tuned_semester",
+    "lightgbm_tuned_semester"
+  ],
+  "weights": {
+    "catboost_tuned": 0.0,
+    "lightgbm_tuned": 0.3,
+    "multiview_gated_mlp_best": 0.0,
+    "tabpfn": 0.2,
+    "catboost_tuned_semester": 0.5,
+    "lightgbm_tuned_semester": 0.0
+  },
+  "oof_f1_macro": 0.7388906309272265,
+  "source_probability_cache": "/media/990Pro/ML/models/metrics/oof_probability_ensemble_probas.npz",
+  "coarse_oof_f1_macro": 0.7388906309272265,
+  "coarse_weights": {
+    "catboost_tuned": 0.0,
+    "lightgbm_tuned": 0.3,
+    "multiview_gated_mlp_best": 0.0,
+    "tabpfn": 0.2,
+    "catboost_tuned_semester": 0.5,
+    "lightgbm_tuned_semester": 0.0
+  },
+  "note": "Coarse grid step=0.05; refined active-member step=0.025; added semester-feature CatBoost/LightGBM candidates."
+}

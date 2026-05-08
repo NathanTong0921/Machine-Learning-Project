@@ -1,0 +1,100 @@
+{
+  "selection_metric": "5-fold CV macro-F1",
+  "cv_splits": 5,
+  "random_state": 42,
+  "preprocessing": "Appendix-aligned semantic split; dense one-hot for categorical features.",
+  "not_run": {
+    "brownboost": "No native sklearn implementation; would require an external package or custom algorithm.",
+    "rankboost": "Ranking algorithm; not a direct fit for the three-class classification target."
+  },
+  "models": {
+    "adaboost_stumps": {
+      "description": "AdaBoost with shallow decision trees; misclassified samples receive larger weights.",
+      "best_cv_f1_macro": 0.7082430657628976,
+      "best_params": {
+        "model__estimator__max_depth": 3,
+        "model__learning_rate": 0.5,
+        "model__n_estimators": 400
+      },
+      "test_metrics": {
+        "accuracy": 0.740210843373494,
+        "precision_macro": 0.7069362834971485,
+        "recall_macro": 0.7143875625071382,
+        "f1_macro": 0.702088581907113,
+        "f1_weighted": 0.7517200464763212,
+        "roc_auc_ovr_macro": 0.877055695579157,
+        "model": "adaboost_stumps",
+        "dropout_precision": 0.8142076502732241,
+        "dropout_recall": 0.6978922716627635,
+        "dropout_f1": 0.7515762925598991,
+        "enrolled_precision": 0.4358974358974359,
+        "enrolled_recall": 0.6428571428571429,
+        "enrolled_f1": 0.5195246179966044,
+        "graduate_precision": 0.8707037643207856,
+        "graduate_recall": 0.8024132730015083,
+        "graduate_f1": 0.8351648351648352,
+        "cv_best_score_f1_macro": 0.7082430657628976
+      }
+    },
+    "gbdt_log_loss": {
+      "description": "Sklearn GBM/GBDT with multinomial log-loss; each stage fits the previous residual gradient.",
+      "best_cv_f1_macro": 0.7216268743528287,
+      "best_params": {
+        "model__learning_rate": 0.1,
+        "model__max_depth": 3,
+        "model__n_estimators": 400,
+        "model__subsample": 1.0
+      },
+      "test_metrics": {
+        "accuracy": 0.7515060240963856,
+        "precision_macro": 0.7124280369916324,
+        "recall_macro": 0.7193210197067478,
+        "f1_macro": 0.7111756258599903,
+        "f1_weighted": 0.7591648216807404,
+        "roc_auc_ovr_macro": 0.8883128004959436,
+        "model": "gbdt_log_loss",
+        "dropout_precision": 0.8169761273209549,
+        "dropout_recall": 0.7213114754098361,
+        "dropout_f1": 0.7661691542288557,
+        "enrolled_precision": 0.4651898734177215,
+        "enrolled_recall": 0.6176470588235294,
+        "enrolled_f1": 0.5306859205776173,
+        "graduate_precision": 0.8551181102362204,
+        "graduate_recall": 0.8190045248868778,
+        "graduate_f1": 0.8366718027734977,
+        "cv_best_score_f1_macro": 0.7216268743528287
+      }
+    },
+    "hist_gradient_boosting": {
+      "description": "Histogram-based gradient boosting; a fast sklearn GBDT variant.",
+      "best_cv_f1_macro": 0.7201099890141267,
+      "best_params": {
+        "model__class_weight": "balanced",
+        "model__l2_regularization": 0.0,
+        "model__learning_rate": 0.05,
+        "model__max_iter": 200,
+        "model__max_leaf_nodes": 15,
+        "model__min_samples_leaf": 10
+      },
+      "test_metrics": {
+        "accuracy": 0.7560240963855421,
+        "precision_macro": 0.7112867081788022,
+        "recall_macro": 0.7133596608042124,
+        "f1_macro": 0.7096213847953351,
+        "f1_weighted": 0.7610792958345771,
+        "roc_auc_ovr_macro": 0.8880346339903985,
+        "model": "hist_gradient_boosting",
+        "dropout_precision": 0.8148148148148148,
+        "dropout_recall": 0.7213114754098361,
+        "dropout_f1": 0.7652173913043478,
+        "enrolled_precision": 0.47079037800687284,
+        "enrolled_recall": 0.5756302521008403,
+        "enrolled_f1": 0.5179584120982986,
+        "graduate_precision": 0.8482549317147192,
+        "graduate_recall": 0.8431372549019608,
+        "graduate_f1": 0.8456883509833586,
+        "cv_best_score_f1_macro": 0.7201099890141267
+      }
+    }
+  }
+}

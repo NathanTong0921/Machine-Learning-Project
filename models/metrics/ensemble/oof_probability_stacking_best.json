@@ -1,0 +1,19 @@
+{
+  "member_names": [
+    "catboost_tuned",
+    "lightgbm_tuned",
+    "multiview_gated_mlp_best",
+    "tabpfn"
+  ],
+  "source_probability_cache": "/media/990Pro/ML/models/metrics/oof_probability_ensemble_probas.npz",
+  "best_config": {
+    "feature_set": "member_proba",
+    "c_value": 0.1,
+    "class_weight": "balanced",
+    "cv_mean_f1_macro": 0.7309740261411062,
+    "cv_std_f1_macro": 0.011824025995222998,
+    "n_features": 12
+  },
+  "selection_rule": "5-fold CV on OOF-derived meta-features; held-out test used only once for evaluation",
+  "note": "Insample OOF stacker metrics are diagnostic only; use meta_cv_f1_macro and held-out test metrics for claims."
+}

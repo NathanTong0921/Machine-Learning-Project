@@ -1,0 +1,120 @@
+{
+  "metadata": {
+    "cv": 5,
+    "quick": false,
+    "n_jobs": 8,
+    "n_features": 36,
+    "categorical_columns": [
+      "Marital status",
+      "Application mode",
+      "Course",
+      "Daytime/evening attendance",
+      "Previous qualification",
+      "Nacionality",
+      "Mother's qualification",
+      "Father's qualification",
+      "Mother's occupation",
+      "Father's occupation",
+      "Displaced",
+      "Educational special needs",
+      "Debtor",
+      "Tuition fees up to date",
+      "Gender",
+      "Scholarship holder",
+      "International"
+    ],
+    "numeric_or_ordinal_columns": [
+      "Application order",
+      "Previous qualification (grade)",
+      "Admission grade",
+      "Age at enrollment",
+      "Curricular units 1st sem (credited)",
+      "Curricular units 1st sem (enrolled)",
+      "Curricular units 1st sem (evaluations)",
+      "Curricular units 1st sem (approved)",
+      "Curricular units 1st sem (grade)",
+      "Curricular units 1st sem (without evaluations)",
+      "Curricular units 2nd sem (credited)",
+      "Curricular units 2nd sem (enrolled)",
+      "Curricular units 2nd sem (evaluations)",
+      "Curricular units 2nd sem (approved)",
+      "Curricular units 2nd sem (grade)",
+      "Curricular units 2nd sem (without evaluations)",
+      "Unemployment rate",
+      "Inflation rate",
+      "GDP"
+    ],
+    "selection_metric": "cv_mean_f1_macro, tie-break cv_mean_enrolled_f1",
+    "max_bin_grid": [
+      16,
+      32,
+      64,
+      128,
+      255
+    ],
+    "column_fraction_grid": [
+      0.6,
+      0.75,
+      0.9,
+      1.0
+    ]
+  },
+  "models": {
+    "lightgbm": {
+      "params": {
+        "max_bin": 16,
+        "column_fraction": 0.6
+      },
+      "approx_effective_feature_count": 22,
+      "cv_mean_f1_macro": 0.7174177423699615,
+      "cv_mean_enrolled_f1": 0.5009647097094294,
+      "test_metrics": {
+        "accuracy": 0.7718373493975904,
+        "precision_macro": 0.7224815475110962,
+        "recall_macro": 0.7179964041101939,
+        "f1_macro": 0.7196343259456159,
+        "f1_weighted": 0.7719547006950898,
+        "roc_auc_ovr_macro": 0.8921260456696501,
+        "dropout_f1": 0.7780487804878049,
+        "enrolled_precision": 0.5141700404858299,
+        "enrolled_recall": 0.5336134453781513,
+        "enrolled_f1": 0.5237113402061856,
+        "graduate_f1": 0.8571428571428571,
+        "model": "lightgbm",
+        "max_bin": 16,
+        "column_fraction": 0.6,
+        "approx_effective_feature_count": 22,
+        "cv_best_f1_macro": 0.7174177423699615,
+        "cv_best_enrolled_f1": 0.5009647097094294
+      }
+    },
+    "xgboost_hist": {
+      "params": {
+        "max_bin": 16,
+        "column_fraction": 0.9
+      },
+      "approx_effective_feature_count": 33,
+      "cv_mean_f1_macro": 0.7076129165804262,
+      "cv_mean_enrolled_f1": 0.46505070389705566,
+      "test_metrics": {
+        "accuracy": 0.7695783132530121,
+        "precision_macro": 0.738624532536423,
+        "recall_macro": 0.6609955457592873,
+        "f1_macro": 0.6641731110603829,
+        "f1_weighted": 0.7422651360726894,
+        "roc_auc_ovr_macro": 0.8886854204076778,
+        "dropout_f1": 0.7669683257918553,
+        "enrolled_precision": 0.6781609195402298,
+        "enrolled_recall": 0.24789915966386555,
+        "enrolled_f1": 0.3630769230769231,
+        "graduate_f1": 0.8624740843123704,
+        "model": "xgboost_hist",
+        "max_bin": 16,
+        "column_fraction": 0.9,
+        "approx_effective_feature_count": 33,
+        "cv_best_f1_macro": 0.7076129165804262,
+        "cv_best_enrolled_f1": 0.46505070389705566
+      }
+    }
+  }
+}

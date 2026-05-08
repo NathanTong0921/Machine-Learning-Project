@@ -1,0 +1,38 @@
+{
+  "config": {
+    "d_token": 48,
+    "n_blocks": 2,
+    "attention_n_heads": 4,
+    "attention_dropout": 0.2,
+    "ff_dropout": 0.2,
+    "lr": 0.0008,
+    "weight_decay": 0.0001,
+    "batch_size": 128,
+    "max_epochs": 60,
+    "patience": 10
+  },
+  "seeds": [
+    42,
+    62,
+    82
+  ],
+  "mean_accuracy": 0.7274096385542168,
+  "std_accuracy": 0.010158687924120502,
+  "mean_f1_macro": 0.6962860165233854,
+  "std_f1_macro": 0.00883432335660605,
+  "mean_auc": 0.8841356432912232,
+  "std_auc": 0.002224693394919026,
+  "best_record": {
+    "seed": 82,
+    "accuracy": 0.7394578313253012,
+    "precision_macro": 0.7238091004371423,
+    "recall_macro": 0.7245729733675731,
+    "f1_macro": 0.7080463908351979,
+    "f1_weighted": 0.753937923362181,
+    "fmi": 0.6371929776760978,
+    "dropout_accuracy": 0.6744730679156908,
+    "enrolled_accuracy": 0.7058823529411765,
+    "graduate_accuracy": 0.7933634992458521,
+    "roc_auc_ovr_macro": 0.8810775443563413
+  }
+}

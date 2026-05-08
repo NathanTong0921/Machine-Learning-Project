@@ -1,0 +1,24 @@
+{
+  "members": [
+    "catboost_cumulative",
+    "lightgbm_hist_cumulative",
+    "gbdt_cumulative"
+  ],
+  "weights": {
+    "catboost_cumulative": 0.3,
+    "lightgbm_hist_cumulative": 0.4,
+    "gbdt_cumulative": 0.3
+  },
+  "oof_f1_macro": 0.7218833388832003,
+  "cv_splits": 5,
+  "weight_step": 0.05,
+  "decomposition": {
+    "stage_a": "Dropout vs NotDropout",
+    "stage_b": "Graduate vs Enrolled, trained only on non-dropout rows",
+    "recomposition": [
+      "P(Dropout)=1-P(NotDropout)",
+      "P(Enrolled)=P(NotDropout)*(1-P(Graduate|NotDropout))",
+      "P(Graduate)=P(NotDropout)*P(Graduate|NotDropout)"
+    ]
+  }
+}

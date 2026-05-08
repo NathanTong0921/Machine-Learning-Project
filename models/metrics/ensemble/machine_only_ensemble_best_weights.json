@@ -1,0 +1,50 @@
+{
+  "members": [
+    "catboost_tuned",
+    "lightgbm_tuned",
+    "lightgbm_hist_column_best",
+    "gbdt_log_loss",
+    "hist_gradient_boosting",
+    "adaboost_stumps",
+    "pasting_decision_tree",
+    "extra_trees",
+    "bagging_decision_tree",
+    "xgboost_hist_column_best"
+  ],
+  "selected_members": [
+    "gbdt_log_loss",
+    "hist_gradient_boosting",
+    "catboost_tuned",
+    "lightgbm_hist_column_best",
+    "extra_trees",
+    "adaboost_stumps"
+  ],
+  "excluded": [
+    "multiview_gated_mlp_best",
+    "all MLP variants",
+    "all transformer variants",
+    "tabpfn"
+  ],
+  "weights": {
+    "catboost_tuned": 0.3,
+    "lightgbm_tuned": 0.0,
+    "lightgbm_hist_column_best": 0.3,
+    "gbdt_log_loss": 0.1,
+    "hist_gradient_boosting": 0.15,
+    "adaboost_stumps": 0.1,
+    "pasting_decision_tree": 0.0,
+    "extra_trees": 0.05,
+    "bagging_decision_tree": 0.0,
+    "xgboost_hist_column_best": 0.0
+  },
+  "oof_f1_macro": 0.7403794427268844,
+  "cv_splits": 5,
+  "max_ensemble_members": 6,
+  "weight_step": 0.05,
+  "refined_weight_step": 0.025,
+  "selection_metric": "OOF macro-F1; held-out test evaluated once",
+  "metric_notes": {
+    "fmi": "Fowlkes-Mallows index from true and predicted class labels.",
+    "class_accuracy": "Per-class accuracy is TP / true class count, equivalent to class recall."
+  }
+}

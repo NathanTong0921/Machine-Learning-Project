@@ -1,0 +1,20 @@
+{
+  "cache": "/home/husrcf/Code/ProtBind/ML/models/metrics/supervised_moe_variant_probabilities.npz",
+  "variant": "moe_best_macro_raw_logistic_none_soft",
+  "labels": [
+    "Dropout",
+    "Enrolled",
+    "Graduate"
+  ],
+  "alphas": [
+    0.05,
+    0.1,
+    0.15,
+    0.2
+  ],
+  "methods": [
+    "thr",
+    "aps"
+  ],
+  "calibration_note": "OOF train probabilities are used as calibration scores; strict split conformal would require a reserved calibration split."
+}

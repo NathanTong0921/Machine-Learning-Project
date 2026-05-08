@@ -1,0 +1,10 @@
+{
+  "n_enrolled": 794,
+  "n_features_after_encoding": 255,
+  "neighbors": 25,
+  "score_band": 0.05,
+  "stage_band": 0.1,
+  "endpoint_centroid_score": "(distance_to_dropout - distance_to_graduate) / sum; positive means closer to Graduate.",
+  "stage_a_signed_distance": "Positive side means NotDropout in Dropout-vs-NotDropout logistic boundary.",
+  "stage_b_signed_distance": "Positive side means Graduate in Enrolled-vs-Graduate logistic boundary."
+}

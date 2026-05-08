@@ -1,0 +1,4 @@
+true_label,enrollment_profile,family_finance,first_semester,second_semester_macro
+Dropout,0.24475297,0.11317326,0.15559492,0.48647887
+Enrolled,0.23818257,0.09933861,0.14506795,0.5174109
+Graduate,0.22068118,0.09023267,0.14747056,0.5416156

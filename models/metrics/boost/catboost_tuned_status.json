@@ -1,0 +1,18 @@
+{
+  "stage": "cv_search",
+  "current_params": {
+    "depth": 4,
+    "iterations": 300,
+    "l2_leaf_reg": 3,
+    "learning_rate": 0.03,
+    "random_strength": 0.5
+  },
+  "current_combo_index": 1,
+  "current_fold": 5,
+  "total_param_combinations": 72,
+  "total_folds": 720,
+  "completed_folds": 5,
+  "progress_ratio": 0.006944444444444444,
+  "best_cv_score_so_far": -Infinity,
+  "best_params_so_far": null
+}

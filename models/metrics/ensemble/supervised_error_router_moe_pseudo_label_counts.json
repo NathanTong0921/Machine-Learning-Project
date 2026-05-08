@@ -1,0 +1,10 @@
+{
+  "catboost_tuned": 486,
+  "lightgbm_hist_column_best": 121,
+  "lightgbm_tuned": 203,
+  "gbdt_log_loss": 380,
+  "hist_gradient_boosting": 255,
+  "extra_trees": 502,
+  "bagging_decision_tree": 782,
+  "xgboost_hist_column_best": 367
+}

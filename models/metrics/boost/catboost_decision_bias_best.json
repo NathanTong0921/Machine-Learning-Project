@@ -1,0 +1,20 @@
+{
+  "labels": [
+    "Dropout",
+    "Enrolled",
+    "Graduate"
+  ],
+  "bias": {
+    "Dropout": 0.0,
+    "Enrolled": 0.05,
+    "Graduate": 0.25
+  },
+  "oof_f1_macro": 0.7176030232036945,
+  "params": {
+    "depth": 6,
+    "iterations": 500,
+    "l2_leaf_reg": 9,
+    "learning_rate": 0.05,
+    "random_strength": 1.0
+  }
+}

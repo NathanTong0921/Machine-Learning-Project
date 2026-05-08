@@ -1,0 +1,14 @@
+{
+  "cache": "/home/husrcf/Code/ProtBind/ML/models/metrics/supervised_moe_variant_probabilities.npz",
+  "cv": 5,
+  "n_jobs": 64,
+  "members": [
+    "catboost_tuned",
+    "lightgbm_hist_column_best",
+    "gbdt_log_loss"
+  ],
+  "variants": {
+    "best_oof/best_test": "moe_best_macro_raw_logistic_none_soft",
+    "enrolled_oof/enrolled_test": "moe_enrolled_raw_logistic_sqrt_margin_soft"
+  }
+}

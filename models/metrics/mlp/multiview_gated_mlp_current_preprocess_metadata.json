@@ -1,0 +1,47 @@
+{
+  "device": "cuda",
+  "seed": 62,
+  "best_epoch": 10,
+  "best_val_loss": 0.6329410414541922,
+  "class_weights": {
+    "Dropout": 1.0381551362683439,
+    "Enrolled": 1.854681647940075,
+    "Graduate": 0.6677454153182308
+  },
+  "class_weight_multipliers": {},
+  "view_dims": {
+    "enrollment_profile": 80,
+    "family_finance": 133,
+    "first_semester": 6,
+    "second_semester_macro": 9
+  },
+  "config": {
+    "seed": 62,
+    "hidden_dim": 64,
+    "dropout": 0.1,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "batch_size": 128
+  },
+  "model_name": "multiview_gated_mlp_current_preprocess",
+  "categorical_columns": [
+    "Application mode",
+    "Course",
+    "Daytime/evening attendance",
+    "Debtor",
+    "Displaced",
+    "Educational special needs",
+    "Father's occupation",
+    "Father's qualification",
+    "Gender",
+    "International",
+    "Marital status",
+    "Mother's occupation",
+    "Mother's qualification",
+    "Nacionality",
+    "Previous qualification",
+    "Scholarship holder",
+    "Tuition fees up to date"
+  ],
+  "preprocessing_note": "Current Appendix-aligned config keeps Application order numeric/ordinal."
+}

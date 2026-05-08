@@ -1,0 +1,32 @@
+{
+  "model": "catboost",
+  "cat_features": [
+    "Marital status",
+    "Application mode",
+    "Course",
+    "Daytime/evening attendance",
+    "Previous qualification",
+    "Nacionality",
+    "Mother's qualification",
+    "Father's qualification",
+    "Mother's occupation",
+    "Father's occupation",
+    "Displaced",
+    "Educational special needs",
+    "Debtor",
+    "Tuition fees up to date",
+    "Gender",
+    "Scholarship holder",
+    "International"
+  ],
+  "params": {
+    "iterations": 500,
+    "learning_rate": 0.03,
+    "depth": 6,
+    "loss_function": "MultiClass",
+    "random_seed": 42,
+    "verbose": 0,
+    "auto_class_weights": "Balanced",
+    "eval_metric": "TotalF1:average=Macro"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "rule": "Use enrolled-oriented MoE probabilities iff its argmax class is Enrolled; otherwise use best-macro MoE.",
+  "cache": "/home/husrcf/Code/ProtBind/ML/models/metrics/supervised_moe_variant_probabilities.npz",
+  "oof_switch_count": 670,
+  "oof_switch_share": 0.21640826873385013,
+  "test_switch_count": 310,
+  "test_switch_share": 0.23343373493975902
+}

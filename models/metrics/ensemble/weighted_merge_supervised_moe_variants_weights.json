@@ -1,0 +1,16 @@
+{
+  "selection": "OOF macro-F1",
+  "cache": "/home/husrcf/Code/ProtBind/ML/models/metrics/supervised_moe_variant_probabilities.npz",
+  "variants": {
+    "best_macro": "moe_best_macro_raw_logistic_none_soft",
+    "enrolled": "moe_enrolled_raw_logistic_sqrt_margin_soft"
+  },
+  "best_weight_by_oof": {
+    "moe_best_macro_raw_logistic_none_soft": 0.62,
+    "moe_enrolled_raw_logistic_sqrt_margin_soft": 0.38
+  },
+  "equal_weight": {
+    "moe_best_macro_raw_logistic_none_soft": 0.5,
+    "moe_enrolled_raw_logistic_sqrt_margin_soft": 0.5
+  }
+}
