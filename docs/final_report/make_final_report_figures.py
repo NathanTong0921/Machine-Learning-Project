@@ -373,20 +373,130 @@ def figure_svm_denoise() -> None:
         ("Enrolled F1", "enrolled_f1"),
     ]
     values = np.array([[dense[col], denoise[col]] for _, col in metrics], dtype=float)
+    deltas = values[:, 1] - values[:, 0]
 
     x = np.arange(len(metrics))
     width = 0.34
-    fig, ax = plt.subplots(figsize=(9.0, 4.8))
-    ax.bar(x - width / 2, values[:, 0], width, label=labels[0], color=COLORS["gray"])
-    ax.bar(x + width / 2, values[:, 1], width, label=labels[1], color=COLORS["teal"])
-    ax.set_ylim(0.49, 0.81)
-    ax.set_ylabel("Score")
-    ax.set_title("SVM improves after targeted noise removal")
-    ax.set_xticks(x)
-    ax.set_xticklabels([m[0] for m in metrics])
-    ax.legend(frameon=False, loc="upper left")
-    ax.grid(axis="y", alpha=0.25)
+    fig, axes = plt.subplots(
+        2,
+        1,
+        figsize=(9.5, 6.1),
+        gridspec_kw={"height_ratios": [2.2, 1.2]},
+        sharex=True,
+    )
+    axes[0].bar(x - width / 2, values[:, 0], width, label=labels[0], color=COLORS["gray"])
+    axes[0].bar(x + width / 2, values[:, 1], width, label=labels[1], color=COLORS["teal"])
+    axes[0].set_ylim(0.49, 0.81)
+    axes[0].set_ylabel("Score")
+    axes[0].set_title("SVM improves after targeted noise removal")
+    axes[0].legend(frameon=False, loc="upper left")
+    axes[0].grid(axis="y", alpha=0.25)
+
+    colors = [COLORS["green"] if value >= 0 else COLORS["red"] for value in deltas]
+    axes[1].bar(x, deltas, color=colors, width=0.52)
+    axes[1].axhline(0, color="#111827", linewidth=1)
+    axes[1].set_ylabel("Delta")
+    axes[1].set_xticks(x)
+    axes[1].set_xticklabels([m[0] for m in metrics])
+    axes[1].grid(axis="y", alpha=0.25)
+    for i, value in enumerate(deltas):
+        va = "bottom" if value >= 0 else "top"
+        y = value + (0.0007 if value >= 0 else -0.0007)
+        axes[1].text(i, y, f"{value:+.4f}", ha="center", va=va, fontsize=8)
+    axes[1].set_ylim(min(deltas.min() - 0.003, -0.004), max(deltas.max() + 0.004, 0.016))
     savefig("svm_denoise_before_after.png")
+
+
+def figure_boost_denoise() -> None:
+    df = pd.read_csv(ROOT / "models/metrics/reporting/boost_drop_noise_delta_3seed.csv")
+    labels = df["label"].tolist()
+    base = df["F1 macro mean base"].to_numpy(dtype=float)
+    denoise = df["F1 macro mean dn"].to_numpy(dtype=float)
+    macro_delta = df["F1 macro mean delta"].to_numpy(dtype=float)
+
+    x = np.arange(len(labels))
+    width = 0.34
+    fig, axes = plt.subplots(
+        2,
+        1,
+        figsize=(10.2, 6.4),
+        gridspec_kw={"height_ratios": [2.1, 1.25]},
+        sharex=True,
+    )
+
+    axes[0].bar(x - width / 2, base, width, label="Original", color=COLORS["gray"])
+    axes[0].bar(x + width / 2, denoise, width, label="Drop-noise", color=COLORS["blue"])
+    axes[0].set_ylim(min(base.min(), denoise.min()) - 0.015, max(base.max(), denoise.max()) + 0.018)
+    axes[0].set_ylabel("Macro-F1 mean")
+    axes[0].set_title("Boosting models: denoising is configuration-specific")
+    axes[0].legend(frameon=False, loc="upper right")
+    axes[0].grid(axis="y", alpha=0.25)
+
+    colors = [COLORS["green"] if value >= 0 else COLORS["red"] for value in macro_delta]
+    axes[1].bar(x, macro_delta, color=colors, width=0.52)
+    axes[1].axhline(0, color="#111827", linewidth=1)
+    axes[1].set_ylabel("Macro-F1 delta")
+    axes[1].set_xticks(x)
+    axes[1].set_xticklabels(labels, rotation=25, ha="right")
+    axes[1].grid(axis="y", alpha=0.25)
+    axes[1].set_ylim(macro_delta.min() - 0.004, macro_delta.max() + 0.004)
+    for i, value in enumerate(macro_delta):
+        va = "bottom" if value >= 0 else "top"
+        y = value + (0.0006 if value >= 0 else -0.0006)
+        axes[1].text(i, y, f"{value:+.4f}", ha="center", va=va, fontsize=8)
+
+    savefig("boost_denoise_delta_3seed.png")
+
+
+def figure_logistic_denoise() -> None:
+    df = pd.read_csv(ROOT / "models/metrics/baseline/logistic_denoise_cross_seed_summary.csv")
+    original = df.loc[df["variant"].eq("original")].iloc[0]
+    denoise = df.loc[df["variant"].eq("drop_noise")].iloc[0]
+    delta = df.loc[df["variant"].eq("drop_noise - original")].iloc[0]
+
+    metrics = [
+        ("Accuracy", "accuracy_mean"),
+        ("Macro-F1", "f1_macro_mean"),
+        ("Enrolled recall", "enrolled_recall_mean"),
+        ("Enrolled F1", "enrolled_f1_mean"),
+    ]
+    labels = [name for name, _ in metrics]
+    original_values = np.array([original[col] for _, col in metrics], dtype=float)
+    denoise_values = np.array([denoise[col] for _, col in metrics], dtype=float)
+    delta_values = np.array([delta[col] for _, col in metrics], dtype=float)
+
+    x = np.arange(len(metrics))
+    width = 0.34
+    fig, axes = plt.subplots(
+        2,
+        1,
+        figsize=(9.5, 6.1),
+        gridspec_kw={"height_ratios": [2.2, 1.2]},
+        sharex=True,
+    )
+
+    axes[0].bar(x - width / 2, original_values, width, label="Original LR", color=COLORS["gray"])
+    axes[0].bar(x + width / 2, denoise_values, width, label="Drop-noise LR", color=COLORS["blue"])
+    axes[0].set_ylim(0.50, 0.91)
+    axes[0].set_ylabel("Cross-seed mean")
+    axes[0].set_title("Logistic Regression: denoising gives small hard-label gains")
+    axes[0].legend(frameon=False, loc="upper left")
+    axes[0].grid(axis="y", alpha=0.25)
+
+    colors = [COLORS["green"] if value >= 0 else COLORS["red"] for value in delta_values]
+    axes[1].bar(x, delta_values, color=colors, width=0.52)
+    axes[1].axhline(0, color="#111827", linewidth=1)
+    axes[1].set_ylabel("Delta")
+    axes[1].set_xticks(x)
+    axes[1].set_xticklabels(labels)
+    axes[1].grid(axis="y", alpha=0.25)
+    for i, value in enumerate(delta_values):
+        va = "bottom" if value >= 0 else "top"
+        y = value + (0.00035 if value >= 0 else -0.00035)
+        axes[1].text(i, y, f"{value:+.4f}", ha="center", va=va, fontsize=8)
+    axes[1].set_ylim(min(delta_values.min() - 0.001, -0.0025), max(delta_values.max() + 0.001, 0.0065))
+
+    savefig("logistic_denoise_delta.png")
 
 
 def figure_story_pipeline() -> None:
@@ -448,6 +558,8 @@ def main() -> None:
     figure_application_order_te_ratios()
     figure_course171_distribution()
     figure_svm_denoise()
+    figure_boost_denoise()
+    figure_logistic_denoise()
 
 
 if __name__ == "__main__":

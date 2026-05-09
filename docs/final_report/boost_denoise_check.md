@@ -140,6 +140,49 @@ SVM 会把所有输入维度都放进距离函数，因此 near-constant / low-s
 
 因此，对 boosting 模型不能只看一个指标下结论。若目标是 leaderboard Macro-F1，某些去噪配置可以保留；若目标是概率质量或后续 ensemble，AUC 下降就需要谨慎。
 
+## Logistic Regression Check
+
+为了确认这组 SVM 去噪列是否也能迁移到线性模型，额外做了 Logistic Regression 对照实验。
+
+实验设置与上面的 cross-seed 检查保持一致：
+
+- 数据：`data/processed/train.csv + test.csv` 合并后重新 stratified split。
+- Seeds：`42, 62, 82`。
+- Test size：`0.3`。
+- 模型：`LogisticRegression(class_weight="balanced", solver="lbfgs")`。
+- 正则：默认 L2 regularization，通过 `C` 网格搜索选择强度。
+- `C` grid：`0.02, 0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0`。
+- 脚本：`scripts/baseline/check_logistic_denoise_effect.py`。
+- 输出：
+  - `models/metrics/baseline/logistic_denoise_cross_seed_metrics.csv`
+  - `models/metrics/baseline/logistic_denoise_cross_seed_summary.csv`
+
+### Cross-seed Mean
+
+| model | accuracy | macro-F1 | AUC | Enrolled recall | Enrolled F1 | Dropout F1 | Graduate F1 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Logistic Regression original | 0.7510 | 0.7115 | 0.8878 | 0.6275 | 0.5271 | 0.7702 | 0.8372 |
+| Logistic Regression drop-noise | 0.7533 | 0.7137 | 0.8860 | 0.6331 | 0.5291 | 0.7717 | 0.8405 |
+| delta | +0.0023 | +0.0022 | -0.0018 | +0.0056 | +0.0020 | +0.0014 | +0.0033 |
+
+![Logistic Regression denoise delta](figures/logistic_denoise_delta.png)
+
+### Interpretation For Logistic Regression
+
+去噪对 Logistic Regression 有小幅正向作用，但收益明显弱于 SVM：
+
+- Macro-F1 平均提升 `+0.0022`，Accuracy 提升 `+0.0023`。
+- `Enrolled` recall 提升 `+0.0056`，说明中间类硬分类边界略有改善。
+- AUC 下降 `-0.0018`，说明概率排序质量没有同步提高。
+
+这和 SVM 的结论一致但强度更弱。原因是 Logistic Regression 也使用完整输入空间，但它学习的是全局线性边界；低信息列会进入线性组合，不过 L2 regularization 会自动压低弱特征系数，因此噪声维度的破坏力小于 RBF-SVM。换句话说，这组列对 LR 不是强噪声，而是低价值/轻微有害特征。
+
+最终建议：
+
+- 对 Logistic Regression：可以把 drop-noise 作为候选配置，但不应作为强结论。
+- 若汇报强调 data-centric improvement，SVM 是更清楚的主案例；LR 只作为“距离/线性模型也有轻微相似趋势”的补充证据。
+- 如果后续把 LR 用作 stacking 或 router，是否删列要看其下游目标；如果目标是概率融合，AUC 小降需要谨慎。
+
 ## Report Conclusion
 
 可以在汇报中这样表述：

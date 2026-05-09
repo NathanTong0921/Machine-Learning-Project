@@ -121,6 +121,17 @@
 - 内容：加入噪声维度后类别距离被稀释；移除低价值维度后边界更清晰。
 - 目的：解释为什么 SVM 比树模型更依赖特征清洁度。
 
+### Figure 14. Logistic Regression 去噪迁移检查
+
+- 图型：上方 before/after 分组柱状图，下方 delta 条形图。
+- 数据来源：`models/metrics/baseline/logistic_denoise_cross_seed_summary.csv`。
+- 展示指标：accuracy、macro-F1、AUC、Enrolled recall、Enrolled F1。
+- 重点 delta：
+  - macro-F1 +0.0022
+  - Enrolled recall +0.0056
+  - AUC -0.0018
+- 目的：说明同一组 noise-like 特征对线性模型也有轻微硬分类收益，但由于 L2 正则会压低弱特征，收益远弱于 RBF-SVM，且概率排序没有变好。
+
 ## 推荐 PPT 顺序
 
 1. Project goal and evaluation protocol。

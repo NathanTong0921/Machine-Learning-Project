@@ -50,7 +50,13 @@
 
 用途：展示同样的去噪策略对 boosting 模型不是普适收益，而是明显依赖模型配置。
 
-## 9. MoE v2 Cross-seed Comparison
+## 9. Logistic Regression Denoise Delta
+
+![Logistic Regression denoise delta](figures/logistic_denoise_delta.png)
+
+用途：展示 SVM 去噪列迁移到 Logistic Regression 时只有小幅硬分类增益，且 AUC 略降。
+
+## 10. MoE v2 Cross-seed Comparison
 
 ![MoE v2 cross-seed comparison](figures/moe_v2_cross_seed_comparison.png)
 
