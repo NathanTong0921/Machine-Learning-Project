@@ -1,0 +1,37 @@
+model,C,mean_train_f1_macro,std_train_f1_macro,mean_cv_f1_macro,std_cv_f1_macro,rank,encoding_note
+logistic_app_order_scalar,0.02,0.7268348438883903,0.0029445502040517427,0.7053229416427393,0.0028418930594768734,8,Current preprocessing: Application order is a scaled numeric/ordinal scalar.
+logistic_app_order_scalar,0.05,0.7402157153972805,0.00392940874184784,0.7070858019348168,0.005804488241513196,3,Current preprocessing: Application order is a scaled numeric/ordinal scalar.
+logistic_app_order_scalar,0.1,0.748752175386264,0.0042677722213512355,0.7093672985944948,0.006202383236496834,2,Current preprocessing: Application order is a scaled numeric/ordinal scalar.
+logistic_app_order_scalar,0.2,0.7562708000130212,0.0034262193594021134,0.7099678473922946,0.007601992053505671,1,Current preprocessing: Application order is a scaled numeric/ordinal scalar.
+logistic_app_order_scalar,0.5,0.7605715197342161,0.004625490498355265,0.7055309306402437,0.007478630740161478,7,Current preprocessing: Application order is a scaled numeric/ordinal scalar.
+logistic_app_order_scalar,1.0,0.766164313414486,0.004027598097509275,0.705793292271978,0.008987965595264893,4,Current preprocessing: Application order is a scaled numeric/ordinal scalar.
+logistic_app_order_scalar,2.0,0.7678068254793163,0.0036243510587609233,0.70569193099924,0.013124709837134412,5,Current preprocessing: Application order is a scaled numeric/ordinal scalar.
+logistic_app_order_scalar,5.0,0.7691609746036348,0.003840247621947297,0.7055431143840608,0.0129136717071323,6,Current preprocessing: Application order is a scaled numeric/ordinal scalar.
+logistic_app_order_scalar,10.0,0.7680599115356942,0.003718372570678832,0.7050282608489024,0.013141674566121229,9,Current preprocessing: Application order is a scaled numeric/ordinal scalar.
+logistic_app_order_onehot,0.02,0.7269885723810718,0.002647339679579503,0.7070032348653004,0.005177573525515964,2,Treat Application order as a nominal category and one-hot encode it.
+logistic_app_order_onehot,0.05,0.7408491983050535,0.004750136448645659,0.7087115994265466,0.005213905915334668,1,Treat Application order as a nominal category and one-hot encode it.
+logistic_app_order_onehot,0.1,0.7492727842770159,0.0049557347119654465,0.7045118775850712,0.0027671528931711704,4,Treat Application order as a nominal category and one-hot encode it.
+logistic_app_order_onehot,0.2,0.7562675263899784,0.004160862418215161,0.7052920933247852,0.00801286361559691,3,Treat Application order as a nominal category and one-hot encode it.
+logistic_app_order_onehot,0.5,0.7620261817766446,0.004355748634085793,0.7024916236305784,0.007573155285991672,6,Treat Application order as a nominal category and one-hot encode it.
+logistic_app_order_onehot,1.0,0.7670749291497644,0.002770868747924715,0.7033443701223264,0.009069280054988664,5,Treat Application order as a nominal category and one-hot encode it.
+logistic_app_order_onehot,2.0,0.7695326802472495,0.002718678173188702,0.6997649717857237,0.009528712866380731,7,Treat Application order as a nominal category and one-hot encode it.
+logistic_app_order_onehot,5.0,0.7708872337817774,0.003382915091834024,0.6992375912532964,0.010054650120785665,9,Treat Application order as a nominal category and one-hot encode it.
+logistic_app_order_onehot,10.0,0.7699355425032876,0.003638070702236566,0.6995464317798832,0.013866589977096114,8,Treat Application order as a nominal category and one-hot encode it.
+logistic_app_order_thermometer,0.02,0.7285787972667663,0.0025667454622188795,0.7051876349370104,0.005767320647983456,3,Replace Application order with nine cumulative threshold indicators.
+logistic_app_order_thermometer,0.05,0.7410559567936901,0.004496325824140376,0.7063472186514205,0.0077100464548095,1,Replace Application order with nine cumulative threshold indicators.
+logistic_app_order_thermometer,0.1,0.7490536196372297,0.004898544344497683,0.7063325538595279,0.00519832167262054,2,Replace Application order with nine cumulative threshold indicators.
+logistic_app_order_thermometer,0.2,0.7572195259250203,0.0034102458509806437,0.7045103769540778,0.005900380915949819,4,Replace Application order with nine cumulative threshold indicators.
+logistic_app_order_thermometer,0.5,0.7621954640978251,0.004483588914962994,0.7012195248023463,0.007865478095670363,6,Replace Application order with nine cumulative threshold indicators.
+logistic_app_order_thermometer,1.0,0.7667874142149682,0.00321342641480498,0.7018529384989509,0.008132753500940091,5,Replace Application order with nine cumulative threshold indicators.
+logistic_app_order_thermometer,2.0,0.7688722404257349,0.002823539124417239,0.6988316610611645,0.00865848349581297,9,Replace Application order with nine cumulative threshold indicators.
+logistic_app_order_thermometer,5.0,0.771615919798061,0.004069293358699356,0.6995535008501754,0.009826792088702263,8,Replace Application order with nine cumulative threshold indicators.
+logistic_app_order_thermometer,10.0,0.7705890300273904,0.003651939063149666,0.6999207954172431,0.013670430888937034,7,Replace Application order with nine cumulative threshold indicators.
+logistic_app_order_oof_target_encoding,0.02,0.7267258813924362,0.003526010764089867,0.7048705991746778,0.00527963399501412,4,Replace Application order with 5-fold OOF smoothed class-rate target encoding.
+logistic_app_order_oof_target_encoding,0.05,0.740218308486657,0.003921454896587955,0.709607662025395,0.004535221528024874,1,Replace Application order with 5-fold OOF smoothed class-rate target encoding.
+logistic_app_order_oof_target_encoding,0.1,0.748169094988663,0.00557769907641732,0.7095871808073937,0.004344097909509293,2,Replace Application order with 5-fold OOF smoothed class-rate target encoding.
+logistic_app_order_oof_target_encoding,0.2,0.7559602746991562,0.0033752832791199105,0.70503909949949,0.0037223846729815013,3,Replace Application order with 5-fold OOF smoothed class-rate target encoding.
+logistic_app_order_oof_target_encoding,0.5,0.7609692239114587,0.00431100171049667,0.7020450629448352,0.008228976007717433,6,Replace Application order with 5-fold OOF smoothed class-rate target encoding.
+logistic_app_order_oof_target_encoding,1.0,0.7653792131958148,0.0028873647896654198,0.7023905989052872,0.008934879688626413,5,Replace Application order with 5-fold OOF smoothed class-rate target encoding.
+logistic_app_order_oof_target_encoding,2.0,0.7679723032760055,0.003033126408982558,0.7002421942870496,0.010135599861087936,8,Replace Application order with 5-fold OOF smoothed class-rate target encoding.
+logistic_app_order_oof_target_encoding,5.0,0.7697903844715052,0.0029281974736073695,0.7007461762245717,0.009330853586967372,7,Replace Application order with 5-fold OOF smoothed class-rate target encoding.
+logistic_app_order_oof_target_encoding,10.0,0.768717412507695,0.0036225584289757582,0.6998159562661271,0.009752450829720226,9,Replace Application order with 5-fold OOF smoothed class-rate target encoding.

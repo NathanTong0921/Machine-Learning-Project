@@ -43,3 +43,15 @@
 ![SVM denoise before after](figures/svm_denoise_before_after.png)
 
 用途：展示 SVM 去噪带来的 data-centric improvement，尤其是 Enrolled recall/F1。
+
+## 8. Boost Denoise Delta
+
+![Boost denoise delta](figures/boost_denoise_delta_3seed.png)
+
+用途：展示同样的去噪策略对 boosting 模型不是普适收益，而是明显依赖模型配置。
+
+## 9. MoE v2 Cross-seed Comparison
+
+![MoE v2 cross-seed comparison](figures/moe_v2_cross_seed_comparison.png)
+
+用途：展示 MoE v2 soft/hard routing 与核心专家模型的跨 seed 均值对比。

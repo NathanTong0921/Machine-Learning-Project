@@ -80,6 +80,22 @@ def add_thermometer_features(train_df, test_df):
     return train_out, test_out, columns
 
 
+def add_onehot_features(train_df, test_df):
+    train_out = train_df.copy()
+    test_out = test_df.copy()
+    values = sorted(train_df[APP_ORDER_COL].dropna().unique())
+    columns = []
+    for value in values:
+        label = str(int(value)) if float(value).is_integer() else str(value)
+        col = f"Application order == {label}"
+        train_out[col] = (train_out[APP_ORDER_COL] == value).astype(float)
+        test_out[col] = (test_out[APP_ORDER_COL] == value).astype(float)
+        columns.append(col)
+    train_out = train_out.drop(columns=[APP_ORDER_COL])
+    test_out = test_out.drop(columns=[APP_ORDER_COL])
+    return train_out, test_out, columns
+
+
 def smoothed_class_rates(frame, labels, alpha):
     counts = frame[TARGET_COL].value_counts().reindex(labels, fill_value=0).astype(float)
     total = float(len(frame))
@@ -214,6 +230,17 @@ def main():
             test_df,
             FEATURE_GROUPS,
             "Current Appendix-aligned scalar numeric Application order.",
+        )
+    )
+
+    onehot_train, onehot_test, onehot_cols = add_onehot_features(train_df, test_df)
+    records.append(
+        run_variant(
+            "onehot_replace",
+            onehot_train,
+            onehot_test,
+            make_feature_groups(onehot_cols),
+            "Replace scalar Application order with train-observed one-hot indicators.",
         )
     )
 

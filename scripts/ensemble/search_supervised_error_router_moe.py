@@ -153,11 +153,11 @@ def assignment_share_payload(assignments, member_names):
 
 
 def make_member_plan(quick):
-    classic = load_json(METRICS_DIR / "classic_boosting_best_params.json")["models"]
-    bagging = load_json(METRICS_DIR / "bagging_tree_best_params.json")["models"]
-    hist = load_json(METRICS_DIR / "hist_column_sampling_best_params.json")["models"]
-    catboost_params = load_json(METRICS_DIR / "catboost_tuned_best_params.json")
-    lightgbm_params = load_json(METRICS_DIR / "lightgbm_tuned_best_params.json")
+    classic = load_json(METRICS_DIR / "boost" / "classic_boosting_best_params.json")["models"]
+    bagging = load_json(METRICS_DIR / "bagging" / "bagging_tree_best_params.json")["models"]
+    hist = load_json(METRICS_DIR / "boost" / "hist_column_sampling_best_params.json")["models"]
+    catboost_params = load_json(METRICS_DIR / "boost" / "catboost_tuned_best_params.json")
+    lightgbm_params = load_json(METRICS_DIR / "boost" / "lightgbm_tuned_best_params.json")
     lightgbm_hist_params = {
         **lightgbm_params,
         "max_bin": hist["lightgbm"]["params"]["max_bin"],

@@ -1,0 +1,36 @@
+model,importance_type,feature,importance,importance_share
+catboost_tuned_seed42,prediction_values_change,Curricular units 1st sem (credited),0.19340389143058473,0.0019340389143058482
+catboost_tuned_seed42,prediction_values_change,Curricular units 2nd sem (credited),0.2281143185458758,0.002281143185458759
+catboost_tuned_seed42,prediction_values_change,Curricular units 1st sem (without evaluations),0.10607987516314422,0.0010607987516314428
+catboost_tuned_seed42,prediction_values_change,Curricular units 2nd sem (without evaluations),0.24894720563011905,0.0024894720563011915
+catboost_tuned_seed42,prediction_values_change,International,0.0,0.0
+catboost_tuned_seed42,prediction_values_change,Educational special needs,0.014648014037293754,0.0001464801403729376
+catboost_tuned_seed42,prediction_values_change,__noise_total__,0.7911933048070176,0.00791193304807018
+lightgbm_hist_column_best_seed42,gain,Curricular units 1st sem (credited),413.3284767717123,0.004091966717600631
+lightgbm_hist_column_best_seed42,gain,Curricular units 2nd sem (credited),285.0218436183641,0.002821726455880471
+lightgbm_hist_column_best_seed42,gain,Curricular units 1st sem (without evaluations),214.24452863485203,0.002121028503647123
+lightgbm_hist_column_best_seed42,gain,Curricular units 2nd sem (without evaluations),139.22662078106077,0.0013783485301806701
+lightgbm_hist_column_best_seed42,gain,International,16.408804059028625,0.00016244774763549642
+lightgbm_hist_column_best_seed42,gain,Educational special needs,0.0,0.0
+lightgbm_hist_column_best_seed42,gain,__noise_total__,1068.2302738650178,0.010575517954944392
+lightgbm_hist_column_best_seed42,split,Curricular units 1st sem (credited),272.0,0.005112685851769704
+lightgbm_hist_column_best_seed42,split,Curricular units 2nd sem (credited),190.0,0.0035713614405744254
+lightgbm_hist_column_best_seed42,split,Curricular units 1st sem (without evaluations),140.0,0.0026315294825285237
+lightgbm_hist_column_best_seed42,split,Curricular units 2nd sem (without evaluations),118.0,0.002218003420988327
+lightgbm_hist_column_best_seed42,split,International,17.0,0.0003195428657356065
+lightgbm_hist_column_best_seed42,split,Educational special needs,0.0,0.0
+lightgbm_hist_column_best_seed42,split,__noise_total__,737.0,0.013853123061596587
+xgboost_exact_onehot_seed42,gain_like_feature_importances,Curricular units 1st sem (credited),0.0062480769120156765,0.0062480769120156765
+xgboost_exact_onehot_seed42,gain_like_feature_importances,Curricular units 2nd sem (credited),0.006258541252464056,0.006258541252464056
+xgboost_exact_onehot_seed42,gain_like_feature_importances,Curricular units 1st sem (without evaluations),0.007169496733695269,0.007169496733695269
+xgboost_exact_onehot_seed42,gain_like_feature_importances,Curricular units 2nd sem (without evaluations),0.0059202988632023335,0.0059202988632023335
+xgboost_exact_onehot_seed42,gain_like_feature_importances,International,0.0,0.0
+xgboost_exact_onehot_seed42,gain_like_feature_importances,Educational special needs,0.004858021158725023,0.004858021158725023
+xgboost_exact_onehot_seed42,gain_like_feature_importances,__noise_total__,0.030454434920102358,0.030454434920102358
+gbdt_log_loss_seed42,sklearn_feature_importance,Curricular units 1st sem (credited),0.0018086551355144156,0.0018086551355144158
+gbdt_log_loss_seed42,sklearn_feature_importance,Curricular units 2nd sem (credited),0.0029879402742046977,0.002987940274204698
+gbdt_log_loss_seed42,sklearn_feature_importance,Curricular units 1st sem (without evaluations),0.004570890049643929,0.00457089004964393
+gbdt_log_loss_seed42,sklearn_feature_importance,Curricular units 2nd sem (without evaluations),0.0034234219782682154,0.003423421978268216
+gbdt_log_loss_seed42,sklearn_feature_importance,International,0.00012612491635195748,0.0001261249163519575
+gbdt_log_loss_seed42,sklearn_feature_importance,Educational special needs,0.0007152513273121098,0.0007152513273121099
+gbdt_log_loss_seed42,sklearn_feature_importance,__noise_total__,0.013632283681295324,0.013632283681295326

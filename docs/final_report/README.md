@@ -6,6 +6,8 @@
 
 - `analysis_themes.md`: 五个重点分析主题的结论草案，包括 GBDT、ensemble、MLP 编码、Course 171 异常子群、SVM 去噪。
 - `ppt_figure_proposals.md`: 建议制作的 PPT 图片、每张图要表达的信息、数据来源和优先级。
+- `boost_denoise_check.md`: 验证 SVM 去噪策略迁移到 boosting 模型时是否仍然有效。
+- `moe_v2_cross_seed_check.md`: supervised error-router MoE v2 的跨 seed 稳定性和 Core3 member 对比。
 
 ## 汇报主线建议
 

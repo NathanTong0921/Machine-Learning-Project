@@ -20,6 +20,7 @@ if str(SCRIPT_DIR) not in sys.path:
 try:
     from scripts.mlp.compare_application_order_encodings_multiview import (
         add_oof_target_encoding,
+        add_onehot_features,
         add_thermometer_features,
         evaluate_variant,
         make_feature_groups,
@@ -29,6 +30,7 @@ except ModuleNotFoundError:
     # 兼容通过相对路径执行脚本的场景（例如 python scripts/mlp/search_application_order_encoding_multiview.py）
     from compare_application_order_encodings_multiview import (
         add_oof_target_encoding,
+        add_onehot_features,
         add_thermometer_features,
         evaluate_variant,
         make_feature_groups,
@@ -122,6 +124,14 @@ def build_variant_data(variant, train_df, test_df):
             make_feature_groups(columns),
             "Replace scalar Application order with nine cumulative threshold indicators.",
         )
+    if variant == "onehot":
+        train_variant, test_variant, columns = add_onehot_features(train_df, test_df)
+        return (
+            train_variant,
+            test_variant,
+            make_feature_groups(columns),
+            "Replace scalar Application order with train-observed one-hot indicators.",
+        )
     if variant == "target_encoding_oof":
         train_variant, test_variant, columns = add_oof_target_encoding(train_df, test_df)
         return (
@@ -135,7 +145,7 @@ def build_variant_data(variant, train_df, test_df):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--variant", choices=["scalar", "thermometer", "target_encoding_oof"], required=True)
+    parser.add_argument("--variant", choices=["scalar", "onehot", "thermometer", "target_encoding_oof"], required=True)
     args = parser.parse_args()
 
     train_df = pd.read_csv(PROCESSED_DIR / "train.csv")

@@ -162,32 +162,126 @@ def figure_ensemble_comparison() -> None:
 
 def figure_mlp_encoding() -> None:
     df = pd.read_csv(ROOT / "models/metrics/mlp/multiview_application_order_encoding_tuned_summary.csv")
+    onehot = pd.read_csv(ROOT / "models/metrics/mlp/multiview_application_order_encoding_search_onehot.csv").iloc[0]
     labels = ["Scalar", "Thermometer", "Target enc."]
-    rows = [
-        df.loc[df["summary_model"].eq("scalar_tuned")].iloc[0],
-        df.loc[df["summary_model"].eq("thermometer_tuned")].iloc[0],
-        df.loc[df["summary_model"].eq("target_encoding_oof_tuned")].iloc[0],
-    ]
+    rows = {
+        "Scalar": df.loc[df["summary_model"].eq("scalar_tuned")].iloc[0],
+        "Thermometer": df.loc[df["summary_model"].eq("thermometer_tuned")].iloc[0],
+        "Target enc.": df.loc[df["summary_model"].eq("target_encoding_oof_tuned")].iloc[0],
+    }
     metrics = [
         ("Macro-F1", "f1_macro"),
         ("AUC", "roc_auc_ovr_macro"),
         ("Enrolled acc.", "enrolled_accuracy"),
     ]
-    values = np.array([[row[col] for _, col in metrics] for row in rows], dtype=float)
+    values = np.array([[rows[label][col] - onehot[col] for _, col in metrics] for label in labels], dtype=float)
 
     x = np.arange(len(labels))
     width = 0.24
-    fig, ax = plt.subplots(figsize=(8.5, 4.8))
+    fig, ax = plt.subplots(figsize=(8.8, 4.8))
     for i, (name, _) in enumerate(metrics):
         ax.bar(x + (i - 1) * width, values[:, i], width, label=name, color=list(COLORS.values())[i])
-    ax.set_ylim(0.54, 0.91)
-    ax.set_ylabel("Score")
-    ax.set_title("Application-order encoding changes MLP behavior")
+    ax.axhline(0, color="#111827", lw=1.0)
+    ax.set_ylim(-0.065, 0.055)
+    ax.set_ylabel("Delta vs one-hot baseline")
+    ax.set_title("MLP encoding deltas relative to one-hot Application order")
     ax.set_xticks(x)
     ax.set_xticklabels(labels)
     ax.legend(ncol=3, frameon=False, loc="upper left")
     ax.grid(axis="y", alpha=0.25)
+    for container in ax.containers:
+        for bar in container:
+            height = bar.get_height()
+            va = "bottom" if height >= 0 else "top"
+            offset = 0.002 if height >= 0 else -0.002
+            ax.text(
+                bar.get_x() + bar.get_width() / 2,
+                height + offset,
+                f"{height:+.3f}",
+                ha="center",
+                va=va,
+                fontsize=7,
+            )
     savefig("mlp_application_order_encoding.png")
+
+
+def figure_logistic_encoding_delta() -> None:
+    df = pd.read_csv(ROOT / "models/metrics/baseline/logistic_application_order_encoding_metrics.csv")
+    df = df.loc[df["set"].eq("Testing")].copy()
+    rows = {
+        "Scalar": df.loc[df["model"].eq("logistic_app_order_scalar")].iloc[0],
+        "Thermometer": df.loc[df["model"].eq("logistic_app_order_thermometer")].iloc[0],
+        "Target enc.": df.loc[df["model"].eq("logistic_app_order_oof_target_encoding")].iloc[0],
+    }
+    onehot = df.loc[df["model"].eq("logistic_app_order_onehot")].iloc[0]
+    labels = ["Scalar", "Thermometer", "Target enc."]
+    metrics = [
+        ("Macro-F1", "f1_macro"),
+        ("AUC", "roc_auc_ovr_macro"),
+        ("Enrolled acc.", "enrolled_accuracy"),
+    ]
+    values = np.array([[rows[label][col] - onehot[col] for _, col in metrics] for label in labels], dtype=float)
+
+    x = np.arange(len(labels))
+    width = 0.24
+    fig, ax = plt.subplots(figsize=(8.8, 4.8))
+    for i, (name, _) in enumerate(metrics):
+        ax.bar(x + (i - 1) * width, values[:, i], width, label=name, color=list(COLORS.values())[i])
+    ax.axhline(0, color="#111827", lw=1.0)
+    ax.set_ylim(-0.008, 0.011)
+    ax.set_ylabel("Delta vs one-hot baseline")
+    ax.set_title("Logistic Regression encoding deltas relative to one-hot")
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels)
+    ax.legend(ncol=3, frameon=False, loc="upper left")
+    ax.grid(axis="y", alpha=0.25)
+    for container in ax.containers:
+        for bar in container:
+            height = bar.get_height()
+            va = "bottom" if height >= 0 else "top"
+            offset = 0.00025 if height >= 0 else -0.00025
+            ax.text(
+                bar.get_x() + bar.get_width() / 2,
+                height + offset,
+                f"{height:+.3f}",
+                ha="center",
+                va=va,
+                fontsize=7,
+            )
+    savefig("logistic_application_order_encoding_delta.png")
+
+
+def figure_application_order_te_ratios() -> None:
+    df = pd.read_csv(ROOT / "models/metrics/baseline/application_order_class_ratios_for_target_encoding.csv")
+    df = df.loc[df["application_order"].isin([1, 2, 3, 4, 5, 6])].copy()
+    df = df.sort_values("application_order")
+
+    labels = [f"{int(row.application_order)}\n(n={int(row.support)})" for row in df.itertuples()]
+    dropout = df["dropout_smoothed_te_ratio"].to_numpy()
+    enrolled = df["enrolled_smoothed_te_ratio"].to_numpy()
+    graduate = df["graduate_smoothed_te_ratio"].to_numpy()
+
+    x = np.arange(len(df))
+    fig, ax = plt.subplots(figsize=(9.2, 5.2))
+    ax.bar(x, dropout, label="TE Dropout", color=COLORS["red"])
+    ax.bar(x, enrolled, bottom=dropout, label="TE Enrolled", color=COLORS["purple"])
+    ax.bar(x, graduate, bottom=dropout + enrolled, label="TE Graduate", color=COLORS["green"])
+
+    ax.set_ylim(0, 1.0)
+    ax.set_ylabel("Smoothed target-encoding ratio")
+    ax.set_xlabel("Application order")
+    ax.set_title("OOF target encoding ratios by Application order", pad=14)
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels)
+    ax.legend(ncol=3, frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.16))
+    ax.grid(axis="y", alpha=0.25)
+
+    for i, (d, e, g) in enumerate(zip(dropout, enrolled, graduate)):
+        ax.text(i, d / 2, f"{d:.2f}", ha="center", va="center", fontsize=8, color="white")
+        ax.text(i, d + e / 2, f"{e:.2f}", ha="center", va="center", fontsize=8, color="white")
+        ax.text(i, d + e + g / 2, f"{g:.2f}", ha="center", va="center", fontsize=8, color="white")
+
+    savefig("application_order_te_ratios.png")
 
 
 def figure_course171_distribution() -> None:
@@ -296,6 +390,8 @@ def main() -> None:
     figure_gbdt_classic_boosting()
     figure_ensemble_comparison()
     figure_mlp_encoding()
+    figure_logistic_encoding_delta()
+    figure_application_order_te_ratios()
     figure_course171_distribution()
     figure_svm_denoise()
 

@@ -1,0 +1,5 @@
+item,dropout,enrolled,graduate,note
+global_train_class_ratio,0.3210594315245478,0.17958656330749354,0.49935400516795864,Baseline class prior in training split.
+mean_raw_order_ratio,0.20400549596445422,0.24102379927107329,0.5549707047644725,Unweighted mean across Application order values.
+mean_smoothed_te_ratio,0.2945209857043565,0.18531815741609595,0.5201608568795475,Unweighted mean after smoothing/shrinkage toward global prior.
+mean_order_imbalance,,,,Mean raw max-min=0.5639; mean smoothed max-min=0.3348.
