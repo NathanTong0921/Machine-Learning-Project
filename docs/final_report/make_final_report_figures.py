@@ -160,6 +160,59 @@ def figure_ensemble_comparison() -> None:
     savefig("ensemble_heldout_comparison.png")
 
 
+def figure_moe_v2_delta_vs_single_expert() -> None:
+    df = pd.read_csv(ROOT / "models/metrics/reporting/all_model_results_cross_seed_summary.csv")
+    baseline = df.loc[df["Model"].eq("lightgbm_hist_column_best")].iloc[0]
+    moe = df.loc[df["Model"].eq("supervised_error_router_moe_v2_raw_logistic_none_soft")].iloc[0]
+    metrics = [
+        ("Macro-F1", "F1 macro mean"),
+        ("AUC", "AUC mean"),
+        ("Enrolled F1", "Enrolled F1 mean"),
+        ("Enrolled recall", "Enrolled recall mean"),
+    ]
+
+    fig, axes = plt.subplots(2, 2, figsize=(9.4, 6.2))
+    axes = axes.flatten()
+    for ax, (title, col) in zip(axes, metrics):
+        base_val = float(baseline[col])
+        moe_val = float(moe[col])
+        delta = moe_val - base_val
+        values = [base_val, moe_val]
+        colors = [COLORS["gray"], COLORS["purple"] if delta < 0 else COLORS["teal"]]
+        ax.bar(["LightGBM\nsingle", "MoE v2\nsoft"], values, color=colors, width=0.56)
+
+        low = min(values)
+        high = max(values)
+        span = max(high - low, 0.001)
+        pad = max(span * 1.8, 0.002)
+        ax.set_ylim(low - pad, high + pad)
+        ax.set_title(title)
+        ax.grid(axis="y", alpha=0.25)
+        ax.text(
+            0.5,
+            high + pad * 0.42,
+            f"Delta {delta:+.4f}",
+            ha="center",
+            va="bottom",
+            fontsize=10,
+            fontweight="bold",
+            color=COLORS["teal"] if delta >= 0 else COLORS["red"],
+        )
+        for idx, val in enumerate(values):
+            ax.text(idx, val, f"{val:.4f}", ha="center", va="bottom", fontsize=8)
+
+    fig.suptitle("MoE v2 soft routing vs strongest stable single expert", y=1.02, fontsize=15)
+    fig.text(
+        0.5,
+        -0.02,
+        "Cross-seed mean over seeds 42/62/82; each subplot uses a local y-axis range to expose the delta.",
+        ha="center",
+        fontsize=9,
+        color="#374151",
+    )
+    savefig("moe_v2_delta_vs_single_expert.png")
+
+
 def figure_mlp_encoding() -> None:
     df = pd.read_csv(ROOT / "models/metrics/mlp/multiview_application_order_encoding_tuned_summary.csv")
     onehot = pd.read_csv(ROOT / "models/metrics/mlp/multiview_application_order_encoding_search_onehot.csv").iloc[0]
@@ -389,6 +442,7 @@ def main() -> None:
     figure_overall_model_snapshot()
     figure_gbdt_classic_boosting()
     figure_ensemble_comparison()
+    figure_moe_v2_delta_vs_single_expert()
     figure_mlp_encoding()
     figure_logistic_encoding_delta()
     figure_application_order_te_ratios()

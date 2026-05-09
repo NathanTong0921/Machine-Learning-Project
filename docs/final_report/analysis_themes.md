@@ -334,6 +334,10 @@ MoE v2 的核心不是普通 ensemble，而是 **supervised error-predicting rou
 | MoE v2 hard routing | 0.7196 | 0.0140 | 0.8907 | 0.5344 | 0.5854 |
 | CatBoost tuned | 0.7150 | 0.0076 | 0.8894 | 0.5332 | 0.6106 |
 
+为了突出 delta，可以使用这张截断坐标轴图。注意它不是从 0 开始，而是每个 subplot 使用局部 y-axis range，所以适合展示“差异方向和幅度”，不适合单独作为绝对分数图。
+
+![MoE v2 delta vs single expert](figures/moe_v2_delta_vs_single_expert.png)
+
 ### 涨点来自哪里
 
 第一，router 的监督信号更接近 ensemble 的真实目标。普通分类器学的是 `P(Y|X)`，但 MoE router 学的是“哪个 expert 对这个样本 true-class loss 最低”。也就是说，router 不是重新预测学生类别，而是在预测专家适配性。
@@ -363,6 +367,15 @@ test hard route shares 也比较分散：
 这说明 MoE v2 没有退化成“永远选择最强 LightGBM”，而是真的在做样本级专家分配。
 
 第三，MoE v2 的收益主要体现在 Enrolled。跨 seed 下，MoE v2 soft 的 macro-F1 均值 `0.7246`，略低于 LightGBM hist-column best 的 `0.7252`；但 Enrolled recall 从 `0.5308` 提到 `0.5812`，Enrolled F1 从 `0.5332` 提到 `0.5386`。这说明它更愿意把边界模糊样本分配给能保住 Enrolled 的专家组合。
+
+进一步的样本级解释见 `docs/final_report/moe_v2_enrolled_rescue_analysis.md`。在 held-out test 上：
+
+- MoE v2 正确识别 `145 / 238` 个真实 `Enrolled`。
+- 相比 `lightgbm_hist_column_best`，MoE v2 额外救回 `24` 个真实 `Enrolled`。
+- `rescued_vs_all_experts = 0`，说明 MoE v2 没有凭空救回三个专家全错的样本。
+- 它真正做的是在专家分歧时降低 LightGBM 主导权，把 CatBoost / GBDT 给出的 Enrolled 信号融合回来。
+
+因此，MoE v2 的可解释价值是“样本级专家适配性”，不是“创造新信息”。最适合汇报的讲法是：router 识别了 LightGBM 对部分中间态学生的偏置，并通过 soft routing 保留其他专家对 Enrolled 的支持。
 
 ### 为什么 soft routing 比 hard routing 更适合汇报
 

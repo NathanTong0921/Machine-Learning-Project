@@ -1,0 +1,12 @@
+group,count,share_of_true_enrolled
+true_enrolled_total,238,1.0
+moe_correct_enrolled,145,0.6092436974789915
+moe_missed_enrolled,93,0.3907563025210084
+catboost_tuned_correct_enrolled,146,0.6134453781512605
+rescued_vs_catboost_tuned,14,0.058823529411764705
+lightgbm_hist_column_best_correct_enrolled,127,0.5336134453781513
+rescued_vs_lightgbm_hist_column_best,24,0.10084033613445378
+gbdt_log_loss_correct_enrolled,147,0.6176470588235294
+rescued_vs_gbdt_log_loss,13,0.0546218487394958
+rescued_vs_all_experts,0,0.0
+all_experts_missed_enrolled,65,0.27310924369747897
