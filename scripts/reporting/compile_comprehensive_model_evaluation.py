@@ -20,7 +20,9 @@ import pandas as pd
 from catboost import CatBoostClassifier
 from lightgbm import LGBMClassifier
 from sklearn.pipeline import Pipeline
+from sklearn.feature_selection import SelectKBest, f_classif, mutual_info_classif
 from sklearn.preprocessing import LabelEncoder
+from sklearn.svm import SVC
 from xgboost import XGBClassifier
 
 if not hasattr(np, "NaN"):
@@ -34,6 +36,11 @@ from src.baselines import get_baseline_models
 from src.config import CATEGORICAL_COLUMNS, LABELS, METRICS_DIR, PROCESSED_DIR, RANDOM_STATE, TARGET_COL
 from src.evaluation import classification_metrics, save_metrics_table
 from src.preprocessing import build_preprocessor, split_feature_columns
+from scripts.baseline.search_svm_hyperparameters import (
+    NOISE_DROP_COLUMNS,
+    make_preprocessor as make_svm_preprocessor,
+    resolve_feature_set,
+)
 
 
 BOOST_METRICS_DIR = METRICS_DIR / "boost"
@@ -505,6 +512,201 @@ def collect_historical_metric_rows() -> pd.DataFrame:
     return pd.DataFrame(rows)[SUMMARY_COLUMNS]
 
 
+def canonical_model_name(model: str) -> str:
+    name = str(model)
+    for suffix in [
+        "_test",
+        "_seed42_test",
+        "_seed62_test",
+        "_seed82_test",
+        "_raw_test",
+        "_biased_test",
+    ]:
+        if name.endswith(suffix):
+            return name[: -len(suffix)]
+    aliases = {
+        "xgboost_hist": "xgboost_hist_best",
+        "xgboost_hist_best_replay": "xgboost_hist_best",
+        "xgboost_exact_onehot_best_structural_params": "xgboost_exact_onehot",
+        "xgboost_exact_onehot_local_tuned": "xgboost_exact_onehot",
+    }
+    return aliases.get(name, name)
+
+
+def augment_train_entire_from_retrained(
+    all_results_df: pd.DataFrame,
+    retrained_df: pd.DataFrame,
+) -> pd.DataFrame:
+    """Add train/entire rows for historical test-only rows when exact retrain rows exist.
+
+    Many historical metric files only stored held-out test metrics. For rows whose
+    model name maps to a reproducible model already evaluated in this reporting
+    script, append the corresponding Training and Entire rows under the original
+    historical family/source. This avoids inventing metrics for unreproducible
+    old grid candidates while making the report complete for common ML baselines.
+    """
+
+    retrained_lookup: dict[str, dict[str, pd.Series]] = {}
+    for _, row in retrained_df.iterrows():
+        key = canonical_model_name(row["Model"])
+        retrained_lookup.setdefault(key, {})[str(row["Set"])] = row
+
+    existing_keys = {
+        (row["Family"], row["Model"], row["Set"], row["Source"])
+        for _, row in all_results_df.iterrows()
+    }
+    additions: list[dict[str, Any]] = []
+
+    for _, row in all_results_df.iterrows():
+        if str(row["Set"]) != "Testing":
+            continue
+        model_key = canonical_model_name(row["Model"])
+        if model_key not in retrained_lookup:
+            continue
+        for set_name in ["Training", "Entire"]:
+            retrained_row = retrained_lookup[model_key].get(set_name)
+            if retrained_row is None:
+                continue
+            out = retrained_row.to_dict()
+            out["Model"] = row["Model"]
+            out["Family"] = row["Family"]
+            out["Set"] = set_name
+            out["Source"] = f"{row['Source']} + retrained:{model_key}"
+            key = (out["Family"], out["Model"], out["Set"], out["Source"])
+            if key not in existing_keys:
+                additions.append(out)
+                existing_keys.add(key)
+
+    if not additions:
+        return all_results_df
+    return pd.concat([all_results_df, pd.DataFrame(additions)[SUMMARY_COLUMNS]], ignore_index=True)
+
+
+def normalize_svm_params(params: dict[str, Any]) -> dict[str, Any]:
+    return {key.removeprefix("model__"): value for key, value in params.items() if key.startswith("model__")}
+
+
+def make_svm_selector(selector: str, params: dict[str, Any]):
+    k_value = params.get("selector__k", "all")
+    if selector == "f_classif":
+        return SelectKBest(score_func=f_classif, k=k_value)
+    if selector == "mutual_info":
+        return SelectKBest(
+            score_func=lambda X, y: mutual_info_classif(
+                X,
+                y,
+                discrete_features=False,
+                random_state=RANDOM_STATE,
+            ),
+            k=k_value,
+        )
+    return None
+
+
+def svm_train_entire_rows_from_historical(
+    historical_df: pd.DataFrame,
+    X_train: pd.DataFrame,
+    y_train: pd.Series,
+    X_test: pd.DataFrame,
+    y_test: pd.Series,
+) -> pd.DataFrame:
+    """Recompute Training/Entire rows for SVM hyperparameter test rows.
+
+    SVM search outputs store `params_json`, `feature_set`, and optional selector
+    information. That is enough to rebuild the same pipeline and evaluate
+    train/entire rows without touching the original experiment files.
+    """
+
+    candidates = historical_df[
+        historical_df["Source"].astype(str).str.contains("svm_hyperparameter")
+        & historical_df["Set"].eq("Testing")
+    ].copy()
+    if candidates.empty:
+        return pd.DataFrame(columns=SUMMARY_COLUMNS)
+
+    rows: list[dict[str, Any]] = []
+    seen: set[tuple[str, str, str]] = set()
+    for _, metric_row in candidates.iterrows():
+        source_path = PROJECT_ROOT / str(metric_row["Source"])
+        try:
+            source_df = pd.read_csv(source_path)
+        except Exception:
+            continue
+        source_match = source_df[source_df["model"].astype(str).eq(str(metric_row["Model"]))]
+        if source_match.empty:
+            continue
+        source_row = source_match.iloc[0]
+        if "params_json" not in source_row or pd.isna(source_row["params_json"]):
+            continue
+        key = (str(metric_row["Model"]), str(metric_row["Family"]), str(metric_row["Source"]))
+        if key in seen:
+            continue
+        seen.add(key)
+
+        try:
+            params = json.loads(source_row["params_json"])
+        except Exception:
+            continue
+
+        feature_set = str(source_row["feature_set"]) if "feature_set" in source_row and pd.notna(source_row["feature_set"]) else "dense"
+        selector = str(source_row["selector"]) if "selector" in source_row and pd.notna(source_row["selector"]) else "none"
+        _, drop_noise = resolve_feature_set(feature_set)
+
+        X_train_used = X_train.copy()
+        X_test_used = X_test.copy()
+        if drop_noise:
+            drop_cols = [col for col in NOISE_DROP_COLUMNS if col in X_train_used.columns]
+            X_train_used = X_train_used.drop(columns=drop_cols)
+            X_test_used = X_test_used.drop(columns=drop_cols)
+
+        numeric_features, categorical_features = split_feature_columns(X_train_used.columns)
+        steps = [
+            (
+                "preprocessor",
+                make_svm_preprocessor(
+                    feature_set,
+                    numeric_features,
+                    categorical_features,
+                    svd_components=64,
+                ),
+            )
+        ]
+        selector_step = make_svm_selector(selector, params)
+        if selector_step is not None:
+            steps.append(("selector", selector_step))
+        steps.append(
+            (
+                "model",
+                SVC(
+                    probability=False,
+                    cache_size=4096,
+                    random_state=RANDOM_STATE,
+                    max_iter=-1,
+                    **normalize_svm_params(params),
+                ),
+            )
+        )
+        pipeline = Pipeline(steps=steps)
+        try:
+            pipeline.fit(X_train_used, y_train)
+            pred_train = pipeline.predict(X_train_used)
+            pred_test = pipeline.predict(X_test_used)
+        except Exception as exc:
+            print(f"[SKIP-SVM-TRAIN-ENTIRE] {metric_row['Model']}: {exc}", flush=True)
+            continue
+
+        for out in evaluate_predictions(str(metric_row["Model"]), y_train, pred_train, y_test, pred_test):
+            if out["Set"] == "Testing":
+                continue
+            out["Family"] = metric_row["Family"]
+            out["Source"] = f"{metric_row['Source']} + retrained_svm"
+            rows.append(out)
+
+    if not rows:
+        return pd.DataFrame(columns=SUMMARY_COLUMNS)
+    return pd.DataFrame(rows)[SUMMARY_COLUMNS]
+
+
 def sort_summary(df: pd.DataFrame) -> pd.DataFrame:
     order = {"Training": 0, "Testing": 1, "Entire": 2, "OOF": 3, "CV": 4}
     df = df.copy()
@@ -540,7 +742,11 @@ def main():
     write_markdown(df[SUMMARY_COLUMNS], DETAILED_OUTPUT_MD)
 
     historical_df = collect_historical_metric_rows()
+    svm_augmented_df = svm_train_entire_rows_from_historical(historical_df, X_train, y_train, X_test, y_test)
+    if not svm_augmented_df.empty:
+        historical_df = pd.concat([historical_df, svm_augmented_df], ignore_index=True)
     all_results_df = pd.concat([df[SUMMARY_COLUMNS], historical_df], ignore_index=True)
+    all_results_df = augment_train_entire_from_retrained(all_results_df, df[SUMMARY_COLUMNS])
     all_results_df = sort_summary(all_results_df)
     save_metrics_table(all_results_df.to_dict("records"), ALL_RESULTS_CSV)
     write_markdown(all_results_df, ALL_RESULTS_MD)

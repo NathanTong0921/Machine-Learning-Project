@@ -157,3 +157,76 @@ CatBoost top-green 子群与 RF proximity upper region 的 75 个交集样本，
   visualization/outputs/catboost_selected75_prediction_check.csv
 
   如果要继续做，这批人应该作为一个独立机制组分析，而不是直接说 CatBoost 已经学会了一个可靠的 Graduate subtype。
+
+## Appendix: SVM-Only Graduate-vs-NonGraduate Trial
+
+为避免在 180 人小样本子群上使用高方差树模型，额外在 `/tmp` 下做了一次 SVM-only 临时实验。该实验没有写入 repo 脚本或正式结果目录，所有产物均位于：
+
+```text
+/tmp/course171_zero_curricular_trial/
+```
+
+实验定义：
+
+```text
+Course == 171
+and all 12 curricular-unit columns == 0
+```
+
+该定义在当前 processed train/test 上复现出 `180` 人：
+
+| split | Dropout | Enrolled | Graduate | total |
+| --- | ---: | ---: | ---: | ---: |
+| train | 57 | 21 | 59 | 137 |
+| test | 20 | 7 | 16 | 43 |
+| total | 77 | 28 | 75 | 180 |
+
+二分类目标为：
+
+```text
+Graduate vs non-Graduate
+```
+
+测试了两组特征：
+
+- `core8`: `Previous qualification (grade)`, `Admission grade`, `Age at enrollment`, `Tuition fees up to date`, `Debtor`, `Application mode`, `Displaced`, `Scholarship holder`
+- `extended15`: `core8` 加上 `Previous qualification`, `Gender`, `Marital status`, 父母学历与职业
+
+SVM 使用 numeric scaling + categorical one-hot，并在小网格中搜索 linear / RBF / degree-2 polynomial kernel。主要结果如下：
+
+| model/features | CV macro-F1 | holdout macro-F1 | Graduate precision | Graduate recall | Graduate F1 | AUC |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| SVM `core8` | **0.7223** | 0.6178 | 0.5000 | 0.6250 | 0.5556 | 0.6782 |
+| SVM `extended15` | 0.7078 | 0.6228 | 0.5000 | 0.6875 | 0.5789 | 0.6748 |
+| best simple rule | n/a | **0.6868** | 0.5789 | 0.6875 | 0.6286 | n/a |
+
+SVM 最佳参数：
+
+```text
+core8:
+  kernel = rbf
+  C = 0.1
+  gamma = scale
+
+extended15:
+  kernel = poly
+  C = 1.0
+  degree = 2
+  gamma = 0.03
+  coef0 = 0.0
+```
+
+结论：
+
+- SVM 在 5-fold CV 上看起来比硬规则更合理，但 holdout 只有 43 人，实际表现并没有超过简单规则。
+- `extended15` 比 `core8` 有更高 Graduate recall，但 precision 仍只有 `0.50`，说明它倾向于多报 Graduate。
+- 这个子群内部确实存在可学习信号，但不足以稳定训练一个可靠的 Graduate-vs-nonGraduate 专属硬分类器。
+- 更稳妥的用法仍然是把 `Course=171 + zero curricular` 当作特殊机制组，用于 soft routing / probability adjustment / explanation，而不是直接用 SVM 或 if-rule 覆盖主模型预测。
+
+临时输出文件：
+
+- `/tmp/course171_zero_curricular_trial/course171_zero_curricular_svm_metrics.csv`
+- `/tmp/course171_zero_curricular_trial/svm_core8_grid.csv`
+- `/tmp/course171_zero_curricular_trial/svm_extended15_grid.csv`
+- `/tmp/course171_zero_curricular_trial/svm_core8_holdout_predictions.csv`
+- `/tmp/course171_zero_curricular_trial/svm_extended15_holdout_predictions.csv`

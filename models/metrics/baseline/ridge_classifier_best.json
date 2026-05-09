@@ -1,0 +1,14 @@
+{
+  "selection_metric": "cv_mean_f1_macro",
+  "cv_splits": 10,
+  "n_jobs": 96,
+  "best_params": {
+    "model__alpha": 100.0,
+    "model__class_weight": "balanced",
+    "model__solver": "auto"
+  },
+  "best_cv_mean_f1_macro": 0.7037407124494428,
+  "best_cv_std_f1_macro": 0.019818406263165615,
+  "metrics_path": "models/metrics/baseline/ridge_classifier_metrics.csv",
+  "grid_path": "models/metrics/baseline/ridge_classifier_grid.csv"
+}
