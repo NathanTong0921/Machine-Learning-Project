@@ -1,0 +1,37 @@
+feature,association_metric,association_name
+Inflation rate,0.001062783382468736,eta_squared
+GDP,0.0018183360985051889,eta_squared
+Curricular units 1st sem (credited),0.0021394171925918663,eta_squared
+Unemployment rate,0.002284927685852953,eta_squared
+Curricular units 2nd sem (credited),0.00242736005178309,eta_squared
+Curricular units 1st sem (without evaluations),0.005418137512599902,eta_squared
+Curricular units 2nd sem (without evaluations),0.007081427643594769,eta_squared
+Application order,0.011646474681750528,eta_squared
+Previous qualification (grade),0.013993529999735748,eta_squared
+International,0.014980410514582891,cramers_v
+Admission grade,0.01610995306334379,eta_squared
+Curricular units 1st sem (evaluations),0.016385159871844197,eta_squared
+Educational special needs,0.0182412735191251,cramers_v
+Curricular units 1st sem (enrolled),0.020484098767076648,eta_squared
+Curricular units 2nd sem (enrolled),0.026911452668364477,eta_squared
+Curricular units 2nd sem (evaluations),0.03780004786073742,eta_squared
+Age at enrollment,0.06859581404443302,eta_squared
+Nacionality,0.07419324442030155,cramers_v
+Marital status,0.09128048368186317,cramers_v
+Daytime/evening attendance,0.09237456759814384,cramers_v
+Displaced,0.11269188087502563,cramers_v
+Mother's qualification,0.15731001353104287,cramers_v
+Previous qualification,0.1599574964854598,cramers_v
+Father's qualification,0.16391649662514474,cramers_v
+Father's occupation,0.18245300269324505,cramers_v
+Mother's occupation,0.18901844817079716,cramers_v
+Gender,0.22672497717885834,cramers_v
+Application mode,0.24320812313055634,cramers_v
+Curricular units 1st sem (grade),0.2453679820347029,eta_squared
+Course,0.2539205493534589,cramers_v
+Debtor,0.25432285504698926,cramers_v
+Curricular units 1st sem (approved),0.26671905251282785,eta_squared
+Scholarship holder,0.3101345823764917,cramers_v
+Curricular units 2nd sem (grade),0.34199702131514303,eta_squared
+Curricular units 2nd sem (approved),0.37990951389003846,eta_squared
+Tuition fees up to date,0.4347433424539741,cramers_v

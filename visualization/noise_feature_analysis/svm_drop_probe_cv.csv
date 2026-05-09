@@ -1,0 +1,9 @@
+variant,dropped_features,n_dropped,n_features_raw,cv_macro_f1,cv_accuracy,cv_enrolled_f1,cv_enrolled_recall,delta_macro_f1_vs_baseline
+drop_credited_without_eval,Curricular units 1st sem (credited)|Curricular units 2nd sem (credited)|Curricular units 1st sem (without evaluations)|Curricular units 2nd sem (without evaluations),4,32,0.7154834288437616,0.7764857881136951,0.5038314176245211,0.47302158273381295,0.0018942832202348825
+none_baseline,,0,36,0.7135891456235267,0.7751937984496124,0.49760765550239233,0.4676258992805755,0.0
+drop_rare_binary,International|Educational special needs,2,34,0.7131633906017578,0.7751937984496124,0.4947267497603068,0.46402877697841727,-0.00042575502176889213
+drop_nacionality,Nacionality,1,35,0.713053158290026,0.774547803617571,0.49571020019065776,0.4676258992805755,-0.0005359873335006871
+drop_application_order,Application order,1,35,0.7112798396627164,0.7739018087855297,0.4913294797687861,0.45863309352517984,-0.0023093059608103594
+drop_macro_credited_without_eval_rare_binary,Unemployment rate|Inflation rate|GDP|Curricular units 1st sem (credited)|Curricular units 2nd sem (credited)|Curricular units 1st sem (without evaluations)|Curricular units 2nd sem (without evaluations)|International|Educational special needs,9,27,0.7096204478033648,0.7719638242894057,0.4938036224976168,0.4658273381294964,-0.003968697820161959
+drop_macro,Unemployment rate|Inflation rate|GDP,3,33,0.707608415729255,0.7709948320413437,0.4870067372473532,0.4550359712230216,-0.005980729894271675
+drop_parent_qual_occ,Mother's qualification|Father's qualification|Mother's occupation|Father's occupation,4,32,0.7046158811925447,0.7700258397932817,0.4740321057601511,0.45143884892086333,-0.008973264430982009

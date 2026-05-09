@@ -1,0 +1,37 @@
+feature,group,kind,train_missing_rate,test_missing_rate,train_unique,test_unique,train_top_freq
+Application mode,enrollment_profile,categorical,0.0,0.0,18,14,0.39341085271317827
+Course,enrollment_profile,categorical,0.0,0.0,17,17,0.16892764857881137
+Daytime/evening attendance,enrollment_profile,categorical,0.0,0.0,2,2,0.8943798449612403
+Debtor,family_finance,categorical,0.0,0.0,2,2,0.8898578811369509
+Displaced,family_finance,categorical,0.0,0.0,2,2,0.5484496124031008
+Educational special needs,family_finance,categorical,0.0,0.0,2,2,0.9880490956072352
+Father's occupation,family_finance,categorical,0.0,0.0,40,33,0.22965116279069767
+Father's qualification,family_finance,categorical,0.0,0.0,32,24,0.268733850129199
+Gender,family_finance,categorical,0.0,0.0,2,2,0.645671834625323
+International,enrollment_profile,categorical,0.0,0.0,2,2,0.9767441860465116
+Marital status,enrollment_profile,categorical,0.0,0.0,6,6,0.8908268733850129
+Mother's occupation,family_finance,categorical,0.0,0.0,31,27,0.35400516795865633
+Mother's qualification,family_finance,categorical,0.0,0.0,28,24,0.2464470284237726
+Nacionality,enrollment_profile,categorical,0.0,0.0,17,13,0.9767441860465116
+Previous qualification,enrollment_profile,categorical,0.0,0.0,17,13,0.8368863049095607
+Scholarship holder,family_finance,categorical,0.0,0.0,2,2,0.7474160206718347
+Tuition fees up to date,family_finance,categorical,0.0,0.0,2,2,0.8808139534883721
+Admission grade,enrollment_profile,numeric,0.0,0.0,576,431,0.035852713178294575
+Age at enrollment,enrollment_profile,numeric,0.0,0.0,46,41,0.23998708010335917
+Application order,enrollment_profile,numeric,0.0,0.0,8,6,0.6831395348837209
+Curricular units 1st sem (approved),first_semester,numeric,0.0,0.0,22,21,0.26776485788113696
+Curricular units 1st sem (credited),first_semester,numeric,0.0,0.0,21,18,0.8678940568475452
+Curricular units 1st sem (enrolled),first_semester,numeric,0.0,0.0,22,21,0.4331395348837209
+Curricular units 1st sem (evaluations),first_semester,numeric,0.0,0.0,34,30,0.17926356589147288
+Curricular units 1st sem (grade),first_semester,numeric,0.0,0.0,612,357,0.1650516795865633
+Curricular units 1st sem (without evaluations),first_semester,numeric,0.0,0.0,11,10,0.9315245478036176
+Curricular units 2nd sem (approved),second_semester_macro,numeric,0.0,0.0,20,17,0.2202842377260982
+Curricular units 2nd sem (credited),second_semester_macro,numeric,0.0,0.0,19,17,0.8795219638242894
+Curricular units 2nd sem (enrolled),second_semester_macro,numeric,0.0,0.0,21,17,0.4337855297157623
+Curricular units 2nd sem (evaluations),second_semester_macro,numeric,0.0,0.0,30,25,0.18540051679586564
+Curricular units 2nd sem (grade),second_semester_macro,numeric,0.0,0.0,605,348,0.20155038759689922
+Curricular units 2nd sem (without evaluations),second_semester_macro,numeric,0.0,0.0,10,9,0.9373385012919897
+GDP,second_semester_macro,numeric,0.0,0.0,10,10,0.12564599483204134
+Inflation rate,second_semester_macro,numeric,0.0,0.0,9,9,0.20251937984496124
+Previous qualification (grade),enrollment_profile,numeric,0.0,0.0,96,74,0.11078811369509044
+Unemployment rate,second_semester_macro,numeric,0.0,0.0,10,10,0.12564599483204134

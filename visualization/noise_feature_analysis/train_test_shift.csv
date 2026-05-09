@@ -1,0 +1,37 @@
+feature,kind,shift_metric,shift_name,max_frequency_delta,unseen_test_mass,unseen_test_level_count,ks_pvalue,mean_std_diff
+Father's occupation,categorical,0.048554683851685806,total_variation,0.023757821985616878,0.004518072289156626,6.0,,
+Mother's qualification,categorical,0.045001712275458426,total_variation,0.016025341676784655,0.0007530120481927711,1.0,,
+Course,categorical,0.043838143270757426,total_variation,0.014054279132032,0.0,0.0,,
+Mother's occupation,categorical,0.04287693409296099,total_variation,0.017482721584010458,0.0007530120481927711,1.0,,
+Application mode,categorical,0.03431555680084679,total_variation,0.02443494909872046,0.0,0.0,,
+Age at enrollment,numeric,0.03417546153606675,ks_statistic,,,,0.22151563202724858,0.02132579585359666
+Father's qualification,categorical,0.03280174963419567,total_variation,0.015151692039475695,0.0015060240963855422,2.0,,
+Previous qualification (grade),numeric,0.031568132997104696,ks_statistic,,,,0.3046228341213308,0.03781817429053688
+Inflation rate,numeric,0.026160844930108028,ks_statistic,,,,0.5372951475467477,0.04575697795307614
+Previous qualification,categorical,0.021819837489492847,total_variation,0.011005261355499507,0.0,0.0,,
+Curricular units 2nd sem (evaluations),numeric,0.02094618785218393,ks_statistic,,,,0.7993741895774488,0.0404117174176338
+Admission grade,numeric,0.019270881977522494,ks_statistic,,,,0.8719474012553073,0.014383231954211387
+Curricular units 1st sem (grade),numeric,0.018840867345350395,ks_statistic,,,,0.8883648196473632,0.01310096479856919
+Curricular units 1st sem (evaluations),numeric,0.018311618567292427,ks_statistic,,,,0.9070959159794834,0.044946691849602025
+Curricular units 2nd sem (approved),numeric,0.017015737368076957,ks_statistic,,,,0.9453678723194482,0.027503478221373105
+Curricular units 2nd sem (grade),numeric,0.016755004514180754,ks_statistic,,,,0.9516779598154467,0.03194279062108468
+Marital status,categorical,0.01657988543320567,total_variation,0.016579885433205654,0.0,0.0,,
+Curricular units 2nd sem (enrolled),numeric,0.014067899504996732,ks_statistic,,,,0.9913834388091293,0.046325957675819915
+Scholarship holder,categorical,0.013879160051056952,total_variation,0.013879160051056966,0.0,0.0,,
+Nacionality,categorical,0.013756576694374387,total_variation,0.0053586438778369105,0.0037650602409638554,4.0,,
+Application order,numeric,0.013285700943308117,ks_statistic,,,,0.9958079998570755,0.026162343513813975
+Curricular units 1st sem (enrolled),numeric,0.011871127922542885,ks_statistic,,,,0.9992302373978104,0.03299300099367466
+Daytime/evening attendance,categorical,0.01184972447931263,total_variation,0.011849724479312651,0.0,0.0,,
+Debtor,categorical,0.011845832944179777,total_variation,0.011845832944179818,0.0,0.0,,
+Unemployment rate,numeric,0.011402197939042994,ks_statistic,,,,0.9996203630759096,0.01830250813600716
+Curricular units 1st sem (approved),numeric,0.009211263659288316,ks_statistic,,,,0.9999971620345773,0.009630853603123006
+Gender,categorical,0.008695635254195089,total_variation,0.008695635254195144,0.0,0.0,,
+GDP,numeric,0.008594455340742817,ks_statistic,,,,0.9999996513148659,0.006758636621843004
+Curricular units 1st sem (without evaluations),numeric,0.007882304411444227,ks_statistic,,,,0.9999999837652622,0.01249195877675721
+Curricular units 2nd sem (without evaluations),numeric,0.006858830671523303,ks_statistic,,,,0.9999999999653806,0.04251375431753734
+Curricular units 1st sem (credited),numeric,0.005599919056069238,ks_statistic,,,,1.0,0.004943457957140054
+International,categorical,0.005358643877836919,total_variation,0.005358643877836928,0.0,0.0,,
+Curricular units 2nd sem (credited),numeric,0.003107390803524174,ks_statistic,,,,1.0,0.0036499859745288913
+Educational special needs,categorical,0.0014087357180660263,total_variation,0.0014087357180660627,0.0,0.0,,
+Tuition fees up to date,categorical,0.0005428691510227235,total_variation,0.0005428691510227512,0.0,0.0,,
+Displaced,categorical,0.00025684131876338445,total_variation,0.0002568413187634122,0.0,0.0,,

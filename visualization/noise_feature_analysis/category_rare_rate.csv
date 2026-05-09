@@ -1,0 +1,18 @@
+feature,rare_threshold,rare_level_count,rare_train_mass,singleton_level_count,unseen_test_level_count,unseen_test_mass
+Father's qualification,0.01,25,0.042958656330749356,11,2,0.0015060240963855422
+Previous qualification,0.01,12,0.03682170542635659,3,0,0.0
+Mother's occupation,0.01,21,0.031330749354005163,7,1,0.0007530120481927711
+Application mode,0.01,9,0.031330749354005163,3,0,0.0
+Nacionality,0.01,16,0.023255813953488372,6,4,0.0037650602409638554
+Father's occupation,0.01,28,0.022932816537467697,13,6,0.004518072289156626
+Mother's qualification,0.01,19,0.020994832041343666,8,1,0.0007530120481927711
+Marital status,0.01,3,0.005490956072351422,1,0,0.0
+Course,0.01,1,0.0029069767441860465,0,0,0.0
+Daytime/evening attendance,0.01,0,0.0,0,0,0.0
+Displaced,0.01,0,0.0,0,0,0.0
+Educational special needs,0.01,0,0.0,0,0,0.0
+Debtor,0.01,0,0.0,0,0,0.0
+Tuition fees up to date,0.01,0,0.0,0,0,0.0
+Gender,0.01,0,0.0,0,0,0.0
+Scholarship holder,0.01,0,0.0,0,0,0.0
+International,0.01,0,0.0,0,0,0.0
