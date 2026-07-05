@@ -1,0 +1,16 @@
+raw_feature,selected_constant_value,overall_ratio_same_value
+Course,171,0.04859855334538879
+Daytime/evening attendance,1,0.8908227848101266
+Curricular units 1st sem (credited),0,0.8695750452079566
+Curricular units 1st sem (enrolled),0,0.0406871609403255
+Curricular units 1st sem (evaluations),0,0.0788878842676311
+Curricular units 1st sem (approved),0,0.16229656419529837
+Curricular units 1st sem (grade),0.0,0.16229656419529837
+Curricular units 1st sem (without evaluations),0,0.9335443037974683
+Curricular units 2nd sem (credited),0,0.8801989150090416
+Curricular units 2nd sem (enrolled),0,0.0406871609403255
+Curricular units 2nd sem (evaluations),0,0.09064195298372514
+Curricular units 2nd sem (approved),0,0.19665461121157324
+Curricular units 2nd sem (grade),0.0,0.19665461121157324
+Curricular units 2nd sem (without evaluations),0,0.9362567811934901
+Target,Graduate,0.4993218806509946
